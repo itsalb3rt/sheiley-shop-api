@@ -1,0 +1,14 @@
+.product-container{
+    border-bottom: 1px solid var(--semi-light-grey);
+    margin: 20px auto;
+}
+
+.product-container .photo img{
+    width: 70px;
+    height: 70px;
+    margin: auto;
+}
+
+.product-container .details > div{
+    margin: 8px auto;
+}

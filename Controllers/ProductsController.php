@@ -19,7 +19,6 @@ class ProductsController extends Controller
     }
 
     public function list(){
-        $session = new SessionsController();
-        var_dump($session->get_all());
+        $this->render('list','Mi lista');
     }
 }
