@@ -1,10 +1,15 @@
-<div class="row" id="product-list">
+<div class="row" id="products-app">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="input-group">
             <input type="search" placeholder="Buscar...">
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px">
+        <div class="stiky-float-right-button">
+            <a href="<?= Assets::href('products/add') ?>" class="undecoration primary important">
+                <i class="fa fa-plus-circle"></i>
+            </a>
+        </div>
         <div class="product-container" v-for="product in products">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -33,4 +38,7 @@
 <script type="text/javascript" src="<?= Assets::setAssets('js/vuejs/vue.js') ?>"></script>
 <script type="text/javascript" src="<?= Assets::setAssets('js/axios/axios.js') ?>"></script>
 <script type="text/javascript" src="<?= Assets::setAssets('js/ligne_route/ligne_route.js') ?>"></script>
-<script type="text/javascript" src="<?= Assets::setAssets('js/products_app/list.js') ?>"></script>
+<script type="text/javascript" src="<?= Assets::setAssets('js/products_app/products.js') ?>"></script>
+<script>
+    productsApp.getProducts();
+</script>

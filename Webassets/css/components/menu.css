@@ -1,3 +1,4 @@
+/*Menu*/
 .sidenav {
     height: 100%;
     width: 0;
@@ -5,21 +6,39 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #F5F5F5;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
     text-align: center;
+}
+.top-container{
+    padding-top: 40px;
+}
+
+.menu-elements i{
+    margin-right: 20px;
+}
+.menu-elements{
+    font-size: 18px;
+    text-align: left
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 20px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    color: var(--black);
     display: block;
     transition: 0.3s;
+}
 
+.category{
+    color: var(--grey);
+    padding: 20px 8px 8px 32px;
+    font-size: 14px;
+}
+.information{
+    color: var(--grey);
+    font-size: 14px;
 }
 
 .sidenav a:hover {
@@ -28,10 +47,30 @@
 
 .sidenav .closebtn {
     position: absolute;
-    top: 0;
+    top: 6px;
     right: 25px;
-    font-size: 36px;
+    font-size: 26px;
+    color: var(--white);
+    font-weight: bold;
     margin-left: 50px;
+    background-color: var(--black);
+    padding: 0px 7px;
+    border-radius: 4px;
+}
+
+.sidenav .user-information .full-name{
+    font-weight: bold;
+}
+.sidenav .user-information{
+    text-align: left!important;
+    font-size: 14px;
+    padding: 10px 0px;
+    border-bottom: 4px solid var(--primary-blue);
+}
+
+.sidenav .user-information > div{
+    margin: 10px auto;
+    margin: 10px 10px 0px 30px;
 }
 
 @media screen and (max-height: 450px) {
@@ -51,6 +90,5 @@
 }
 
 .menu-container{
-
     border-bottom: solid 2px var(--primary-blue);
 }

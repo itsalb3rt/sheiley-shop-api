@@ -1,6 +1,7 @@
 .product-container{
     border-bottom: 1px solid var(--semi-light-grey);
     margin: 20px auto;
+    margin-right: 40px;
 }
 
 .product-container .photo img{
@@ -11,4 +12,15 @@
 
 .product-container .details > div{
     margin: 8px auto;
+}
+
+.stiky-float-right-button{
+    position: fixed;
+    font-size: 50px;
+    color: var(--primary-blue);
+    bottom: 40px;
+    right: 20px;
+    border-radius: 50%;
+    width: 39px;
+    height: 42px;
 }

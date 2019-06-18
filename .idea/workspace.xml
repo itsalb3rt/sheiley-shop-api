@@ -2,15 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3407e737-7f55-4c78-b56a-143606a3f94f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Views/Products/list.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Webassets/css/components/menu.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Webassets/css/components/products.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Webassets/js/products_app/list.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controllers/MiscellanyController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Miscellany/Miscellany.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Products/Products.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/Miscellany/measurement_units.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/Products/add.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Webassets/js/products_app/components/products.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Webassets/js/products_app/products.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ProductsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Layouts/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Layouts/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Products/list.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Products/list.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Webassets/css/components/menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/Webassets/css/components/menu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Webassets/css/components/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/Webassets/css/components/products.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Webassets/css/ligne/ligne.css" beforeDir="false" afterPath="$PROJECT_DIR$/Webassets/css/ligne/ligne.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Webassets/js/products_app/list.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,11 +28,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AuthController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Controllers/AuthController.php">
+      <file leaf-file-name="MiscellanyController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Controllers/MiscellanyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="38" column="85" selection-start-line="38" selection-start-column="85" selection-end-line="38" selection-end-column="85" />
+            <state relative-caret-position="484">
+              <caret line="34" column="42" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Views/Layouts/default.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="35" column="53" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="measurement_units.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Views/Miscellany/measurement_units.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="652">
+              <caret line="40" column="10" selection-end-line="41" selection-end-column="6" />
+              <folding>
+                <element signature="e#408#413#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,9 +65,24 @@
       <list>
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>login_check</find>
+      <find>register_u</find>
+      <find>router-link</find>
+      <find>font-awesome-icon</find>
+      <find>svg</find>
+      <find>input-gro</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>a</replace>
+      <replace>i</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,14 +98,23 @@
         <option value="$PROJECT_DIR$/Models/User/User.php" />
         <option value="$PROJECT_DIR$/Views/Auth/login.php" />
         <option value="$PROJECT_DIR$/Core/Util/ligne_sessions/SessionsController.php" />
-        <option value="$PROJECT_DIR$/Controllers/ProductsController.php" />
         <option value="$PROJECT_DIR$/Webassets/css/components/menu.css" />
-        <option value="$PROJECT_DIR$/Webassets/js/products_app/list.js" />
+        <option value="$PROJECT_DIR$/Controllers/AuthController.php" />
         <option value="$PROJECT_DIR$/Webassets/css/components/products.css" />
         <option value="$PROJECT_DIR$/Webassets/css/ligne/ligne.css" />
-        <option value="$PROJECT_DIR$/Views/Layouts/default.php" />
+        <option value="$PROJECT_DIR$/Webassets/js/products_app/components/products.vue" />
+        <option value="$PROJECT_DIR$/Webassets/js/products_app/list.js" />
+        <option value="$PROJECT_DIR$/Webassets/js/products_app/product.js" />
+        <option value="$PROJECT_DIR$/Webassets/js/products_app/components/products.js" />
+        <option value="$PROJECT_DIR$/Models/Products/Products.php" />
         <option value="$PROJECT_DIR$/Views/Products/list.php" />
-        <option value="$PROJECT_DIR$/Controllers/AuthController.php" />
+        <option value="$PROJECT_DIR$/Controllers/ProductsController.php" />
+        <option value="$PROJECT_DIR$/Webassets/js/products_app/products.js" />
+        <option value="$PROJECT_DIR$/Models/Miscellany/Miscellany.php" />
+        <option value="$PROJECT_DIR$/Views/Products/add.php" />
+        <option value="$PROJECT_DIR$/Controllers/MiscellanyController.php" />
+        <option value="$PROJECT_DIR$/Views/Layouts/default.php" />
+        <option value="$PROJECT_DIR$/Views/Miscellany/measurement_units.php" />
       </list>
     </option>
   </component>
@@ -93,60 +145,6 @@
               <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
               <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-              <item name="Products" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="ligne" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sheiley_shop_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sheiley_shop_api" type="462c0819:PsiDirectoryNode" />
-              <item name="Webassets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="products_app" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -155,6 +153,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/wamp64/www/sheiley_shop_api/Webassets/js/products_app/products.js" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -194,18 +193,20 @@
       <workItem from="1559913485872" duration="1111000" />
       <workItem from="1560213325080" duration="789000" />
       <workItem from="1560264664280" duration="2461000" />
-      <workItem from="1560275625710" duration="8171000" />
+      <workItem from="1560275625710" duration="8218000" />
+      <workItem from="1560794029851" duration="12000" />
+      <workItem from="1560885584517" duration="7330000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39399000" />
+    <option name="totallyTimeSpent" value="46788000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19601542" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20115681" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -233,6 +234,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Controllers/AuthController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="38" column="88" lean-forward="true" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Views/Layouts/default.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="696">
@@ -416,13 +424,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Views/Auth/register.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="56" column="33" lean-forward="true" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Models/User/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="556">
@@ -443,13 +444,6 @@
     <entry file="file://$PROJECT_DIR$/Webroot/.htaccess">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/ProductsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Views/Layouts/simple_layout.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -457,62 +451,135 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Webassets/css/components/menu.css">
+    <entry file="file://$PROJECT_DIR$/Views/Auth/register.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Webassets/css/ligne/ligne.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="24" selection-start-line="24" selection-end-line="36" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Views/Layouts/default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="29" column="67" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="67" />
+        <state relative-caret-position="28">
+          <caret line="56" column="33" lean-forward="true" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Views/Auth/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="12" column="41" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="41" />
+          <caret line="12" column="49" lean-forward="true" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Webassets/css/components/menu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="17" column="16" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Webassets/css/font_awesome/font-awesome.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="3" column="24690" selection-start-line="3" selection-start-column="24690" selection-end-line="3" selection-end-column="24690" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Webassets/css/components/products.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="13" selection-end-column="1" />
+        <state relative-caret-position="96">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Webassets/css/ligne/ligne.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="406" column="21" selection-start-line="406" selection-start-column="21" selection-end-line="406" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Webassets/js/products_app/list.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
+        <state relative-caret-position="216">
+          <caret line="9" column="9" lean-forward="true" selection-end-line="14" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Views/Products/list.php">
+    <entry file="file://$PROJECT_DIR$/Webassets/js/products_app/components/products.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="336">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/AuthController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="38" column="85" selection-start-line="38" selection-start-column="85" selection-end-line="38" selection-end-column="85" />
+        <state relative-caret-position="288">
+          <caret line="56" column="60" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Products/Products.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/Products/list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="888">
+          <caret line="37" selection-start-line="37" selection-end-line="40" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Models/Miscellany/Miscellany.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="24" column="23" lean-forward="true" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/ProductsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="37" column="36" lean-forward="true" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
+          <folding>
+            <element signature="e#91#139#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/Products/add.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-624">
+          <caret line="1" column="58" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Webassets/js/products_app/products.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/MiscellanyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="34" column="42" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/Layouts/default.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="35" column="53" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/Miscellany/measurement_units.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="40" column="10" selection-end-line="41" selection-end-column="6" />
+          <folding>
+            <element signature="e#408#413#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

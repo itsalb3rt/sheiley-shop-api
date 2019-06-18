@@ -6,6 +6,7 @@
  * Time: 2:15 PM
  */
 use Core\Util\ligne_sessions\SessionsController;
+use Models\Products\Products;
 
 class ProductsController extends Controller
 {
@@ -21,4 +22,24 @@ class ProductsController extends Controller
     public function list(){
         $this->render('list','Mi lista');
     }
+
+    public function add(){
+        $this->render('add','Nuevo producto');
+    }
+
+    public function products(){
+        $request = $this->easy_request();
+        if($request->server->get('REQUEST_METHOD') == 'GET'){
+            $products = new Products();
+            echo json_encode($products->products());
+        }
+    }
+
+    public function createProduct(){
+        $request = $this->easy_request();
+        if($request->server->get('REQUEST_METHOD') == 'GET'){
+            var_dump($_POST);
+        }
+    }
+
 }

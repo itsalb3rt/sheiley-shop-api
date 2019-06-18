@@ -403,6 +403,8 @@ button, input, optgroup, select, textarea {
 .input-group label {
     font-weight: bold;
     color: var(--black);
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .input-group input[type='email'],

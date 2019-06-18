@@ -10,10 +10,6 @@ use Core\Util\ligne_sessions\SessionsController;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        header('Access-Control-Allow-Origin:http://localhost:8080');
-    }
 
     public function login(){
         $session = new SessionsController();
@@ -36,9 +32,9 @@ class AuthController extends Controller
                 && password_verify($request->request->filter('password'),$user_credentials->password)){
 
                 $this->createUserSession($user_credentials);
-                echo json_encode(['status'=>'login_correct','user'=>$user_credentials]);
+                $this->redirect(['controller'=>'products','action'=>'list']);
             }else{
-                echo json_encode(['status'=>'login_failed']);
+                $this->redirect(['controller'=>'auth','action'=>'login'],'?worng_data=true');
             }
         }
     }
@@ -46,6 +42,7 @@ class AuthController extends Controller
     public function logout(){
         $session = new SessionsController();
         $session->destroy_all_session();
+        $this->redirect(['controller'=>'auth','action'=>'login']);
     }
 
     public function register(){
@@ -60,7 +57,7 @@ class AuthController extends Controller
         if($request->server->get('REQUEST_METHOD') == 'POST'){
 
             if(!$this->password_match($request->request->get('password'),$request->request->get('password2'))){
-                echo json_encode(['status'=>'bad_password']);
+                $this->redirect(['controller'=>'auth','action'=>'register?bad_password=true']);
                 exit();
             }
 
@@ -75,17 +72,17 @@ class AuthController extends Controller
             $new_user = new User();
 
             if( $new_user->isExitsUserName($user_data['user_name'])->count > 0){
-                echo json_encode(['status'=>'user_exists']);
+                $this->redirect(['controller'=>'auth','action'=>'register?user_exists=true']);
                 exit();
             }
 
             if( $new_user->isExitsEmail($user_data['email'])->count > 0){
-                echo json_encode(['status'=>'email_exists']);
+                $this->redirect(['controller'=>'auth','action'=>'register?user_exists=true']);
                 exit();
             }
 
             $new_user->registerUser($user_data);
-            echo json_encode(['status'=>'register']);
+            $this->redirect(['controller'=>'auth','action'=>'login?create_user=true']);
         }
     }
 
