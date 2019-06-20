@@ -13,11 +13,18 @@ use Core\Model;
 
 class Products extends Model
 {
-    public function products($idUser){
-        return $this->getBdd()
-            ->table('products')
-            ->where('id_user','=',$idUser)
-            ->getAll();
+    public function products($idUser = null,$idProduct = null){
+        if($idUser == null){
+            return $this->getBdd()
+                ->table('products')
+                ->where('id_product','=',$idProduct)
+                ->get();
+        }else{
+            return $this->getBdd()
+                ->table('products')
+                ->where('id_user','=',$idUser)
+                ->getAll();
+        }
     }
 
     public function add($data){
@@ -25,6 +32,20 @@ class Products extends Model
             ->table('products')
             ->insert($data);
         return $this->getBdd()->insertId();
+    }
+
+    public function update($idProduct,$data){
+        $this->getBdd()
+            ->table('products')
+            ->where('id_product','=',$idProduct)
+            ->update($data);
+    }
+
+    public function delete($idProduct){
+        $this->getBdd()
+            ->table('products')
+            ->where('id_product','=',$idProduct)
+            ->delete();
     }
 
     public function getProductByName($name,$idUser){

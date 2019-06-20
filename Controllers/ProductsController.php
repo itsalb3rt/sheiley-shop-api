@@ -12,6 +12,7 @@ class ProductsController extends Controller
     public function __construct()
     {
         header('Access-Control-Allow-Origin:http://localhost:8080');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     }
 
     public function list($idUser){
@@ -19,6 +20,28 @@ class ProductsController extends Controller
         if($request->server->get('REQUEST_METHOD') == 'GET'){
             $products = new Products();
             echo json_encode($products->products($idUser));
+        }
+    }
+
+    public function products(){
+        $request = $this->easy_request();
+        switch ($request->server->get('REQUEST_METHOD')){
+            case 'GET':
+                $products = new Products();
+                echo json_encode($products->products(null,$request->query->filter('idProduct')));
+                break;
+        }
+    }
+
+    public function update(){
+        $request = $this->easy_request();
+        if($request->server->get('REQUEST_METHOD') == 'POST'){
+            $product = new Products();
+            $data = json_decode($request->request->get('product'),true);
+            $product->update($request->request->filter('id_product'),$data);
+            echo json_encode([
+               'status'=>'success'
+            ]);
         }
     }
 
@@ -47,6 +70,17 @@ class ProductsController extends Controller
 
             }
             echo json_encode($result);
+        }
+    }
+
+    public function delete($idProduct):void {
+        $request = $this->easy_request();
+        if($request->server->get('REQUEST_METHOD') == 'GET'){
+            $product = new Products();
+            $product->delete($idProduct);
+            echo json_encode([
+               'status'=>'success'
+            ]);
         }
     }
 
