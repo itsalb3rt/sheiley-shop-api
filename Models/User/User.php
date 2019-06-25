@@ -15,11 +15,13 @@ class User extends Model
 {
     /**
      * @param $user | Array
+     * @return int
      */
-    public function registerUser(Array $user):void {
+    public function registerUser(Array $user):int {
         $this->getBdd()
             ->table('users')
             ->insert($user);
+        return $this->getBdd()->insertId();
     }
 
     public function isExitsUserName(String $userName):object {

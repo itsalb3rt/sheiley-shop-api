@@ -119,4 +119,25 @@ class MiscellanyController extends Controller
         }
     }
 
+    public function itbis(){
+        $reques = $this->easy_request();
+
+        switch ($reques->server->get('REQUEST_METHOD')){
+            case 'GET':
+                $idUser = $reques->query->filter('id_user');
+                $miscellany = new Miscellany();
+                echo json_encode($miscellany->getItbis($idUser));
+                break;
+            case 'POST':
+                $miscellany = new Miscellany();
+                $miscellany->updateItbis($reques->request->filter('id_user'),
+                    [
+                        'quantity'=>$reques->request->filter('quantity')
+                    ]
+                );
+                echo json_encode(['status'=>'success']);
+                break;
+        }
+    }
+
 }

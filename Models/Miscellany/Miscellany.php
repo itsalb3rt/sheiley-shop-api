@@ -70,4 +70,30 @@ class Miscellany extends Model
             ->where('id_category','=',$idCategory)
             ->get();
     }
+
+    public function createEstablishmentName($data){
+        $this->getBdd()
+            ->table('names_establishments')
+            ->insert($data);
+    }
+
+    public function createInitialItbis($data){
+        $this->getBdd()
+            ->table('itbis')
+            ->insert($data);
+    }
+
+    public function getItbis($idUser){
+        return $this->getBdd()
+            ->table('itbis')
+            ->where('id_user','=',$idUser)
+            ->get();
+    }
+
+    public function updateItbis($idUser,$data){
+        $this->getBdd()
+            ->table('itbis')
+            ->where('id_user','=',$idUser)
+            ->update($data);
+    }
 }

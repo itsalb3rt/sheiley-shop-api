@@ -7,6 +7,7 @@
  */
 use Models\User\User;
 use Core\Util\ligne_sessions\SessionsController;
+use Models\Miscellany\Miscellany;
 
 class AuthController extends Controller
 {
@@ -84,7 +85,12 @@ class AuthController extends Controller
                 exit();
             }
 
-            $new_user->registerUser($user_data);
+            $idUser = $new_user->registerUser($user_data);
+            $miscellany = new Miscellany();
+            $miscellany->createInitialItbis([
+                'quantity'=>1,
+                'id_user'=>$idUser
+            ]);
             echo json_encode(['status'=>'register']);
         }
     }

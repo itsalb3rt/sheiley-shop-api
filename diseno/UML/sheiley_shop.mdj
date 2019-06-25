@@ -990,7 +990,7 @@
 									"font": "Arial;13;1",
 									"left": 696,
 									"top": 101,
-									"width": 181.6962890625,
+									"width": 183.8544921875,
 									"height": 13,
 									"text": "itbis"
 								},
@@ -1016,7 +1016,7 @@
 											"font": "Arial;13;0",
 											"left": 701,
 											"top": 124,
-											"width": 171.6962890625,
+											"width": 173.8544921875,
 											"height": 13
 										},
 										{
@@ -1031,22 +1031,37 @@
 											"font": "Arial;13;0",
 											"left": 701,
 											"top": 139,
-											"width": 171.6962890625,
+											"width": 173.8544921875,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFriXxRMwYDGlQ=",
+											"_parent": {
+												"$ref": "AAAAAAFqohbHlO3RFoc="
+											},
+											"model": {
+												"$ref": "AAAAAAFriXxQyQYA/qo="
+											},
+											"font": "Arial;13;0",
+											"left": 701,
+											"top": 154,
+											"width": 173.8544921875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 696,
 									"top": 119,
-									"width": 181.6962890625,
-									"height": 38
+									"width": 183.8544921875,
+									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 696,
 							"top": 96,
-							"width": 181.6962890625,
-							"height": 61,
+							"width": 183.8544921875,
+							"height": 76,
 							"nameLabel": {
 								"$ref": "AAAAAAFqohbHlO3Q1/Y="
 							},
@@ -1751,7 +1766,7 @@
 								"$ref": "AAAAAAFqohbHlO3PWvY="
 							},
 							"lineStyle": 1,
-							"points": "878:132;903:134"
+							"points": "880:136;903:137"
 						},
 						{
 							"_type": "ERDRelationshipView",
@@ -2394,7 +2409,10 @@
 							"name": "id_user",
 							"type": "INTEGER",
 							"length": "11",
-							"foreignKey": true
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFqofU4ruq1i7U="
+							}
 						}
 					]
 				},
@@ -2607,6 +2625,20 @@
 							"name": "quantity",
 							"type": "INTEGER",
 							"length": "6"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFriXxQyQYA/qo=",
+							"_parent": {
+								"$ref": "AAAAAAFqohbHk+3Nj7M="
+							},
+							"name": "id_user",
+							"type": "INTEGER",
+							"length": "11",
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFqofU4ruq1i7U="
+							}
 						}
 					]
 				},
@@ -2650,8 +2682,8 @@
 								"$ref": "AAAAAAFqojIau+4Kfr8="
 							},
 							"name": "product_name",
-							"type": "INTEGER",
-							"length": "11"
+							"type": "VARCHAR",
+							"length": "254"
 						},
 						{
 							"_type": "ERDColumn",
@@ -2679,9 +2711,9 @@
 							"_parent": {
 								"$ref": "AAAAAAFqojIau+4Kfr8="
 							},
-							"name": "itbis_quantity",
+							"name": "apply_itbis",
 							"type": "INTEGER",
-							"length": "6"
+							"length": "1"
 						},
 						{
 							"_type": "ERDColumn",
