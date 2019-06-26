@@ -25,4 +25,32 @@ class Shopping extends Model
             ->table('purchases_details')
             ->insert($data);
     }
+
+    public function purchaseDetails($idPurchase){
+        return $this->getBdd()
+            ->table('purchases_details')
+            ->where('id_purchase','=',$idPurchase)
+            ->getAll();
+    }
+
+    public function purchase($idPurchase){
+        return $this->getBdd()
+            ->table('purchases')
+            ->where('id_purchase','=',$idPurchase)
+            ->get();
+    }
+
+    public function deletePurchase($idPurchase){
+        $this->getBdd()
+            ->table('purchases')
+            ->where('id_purchase','=',$idPurchase)
+            ->delete();
+    }
+
+    public function deletePurchaseDetails($idPurchase){
+        $this->getBdd()
+            ->table('purchases_details')
+            ->where('id_purchase','=',$idPurchase)
+            ->delete();
+    }
 }

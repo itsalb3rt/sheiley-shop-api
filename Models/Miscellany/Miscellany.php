@@ -13,32 +13,26 @@ use Core\Model;
 
 class Miscellany extends Model
 {
-    public function measurementUnits($id_user){
+    //Getters
+    public function namesEstablishments($idPurchase){
         return $this->getBdd()
-            ->table('measurement_units')
-            ->where('id_user','=',$id_user)
-            ->getAll();
+            ->table('names_establishments')
+            ->where('id_purchase','=',$idPurchase)
+            ->get();
     }
 
-    public function addMeasurementUnits($data){
-        $this->getBdd()
-            ->table('measurement_units')
-            ->insert($data);
-        return $this->getBdd()->insertId();
+    public function getItbis($idUser){
+        return $this->getBdd()
+            ->table('itbis')
+            ->where('id_user','=',$idUser)
+            ->get();
     }
 
-    public function deleteMeasurementUnits($id_unit_measurement){
-        $this->getBdd()
-            ->table('measurement_units')
-            ->where('id_unit_measurement','=',$id_unit_measurement)
-            ->delete();
-    }
-
-    public function countProductsWithMeasurementUnits($idMeasurementUnit){
+    public function countProductsWithCategory($idCategory){
         return $this->getBdd()
             ->count('id_category','count')
             ->table('products')
-            ->where('id_unit_measurement','=',$idMeasurementUnit)
+            ->where('id_category','=',$idCategory)
             ->get();
     }
 
@@ -49,26 +43,35 @@ class Miscellany extends Model
             ->getAll();
     }
 
+    public function countProductsWithMeasurementUnits($idMeasurementUnit){
+        return $this->getBdd()
+            ->count('id_category','count')
+            ->table('products')
+            ->where('id_unit_measurement','=',$idMeasurementUnit)
+            ->get();
+    }
+
+    public function measurementUnits($id_user){
+        return $this->getBdd()
+            ->table('measurement_units')
+            ->where('id_user','=',$id_user)
+            ->getAll();
+    }
+
+    //Creaters
+
+    public function addMeasurementUnits($data){
+        $this->getBdd()
+            ->table('measurement_units')
+            ->insert($data);
+        return $this->getBdd()->insertId();
+    }
+
     public function addCategory($data){
         $this->getBdd()
             ->table('categories')
             ->insert($data);
         return $this->getBdd()->insertId();
-    }
-
-    public function deleteCategory($idCategory){
-        $this->getBdd()
-            ->table('categories')
-            ->where('id_category','=',$idCategory)
-            ->delete();
-    }
-
-    public function countProductsWithCategory($idCategory){
-        return $this->getBdd()
-            ->count('id_category','count')
-            ->table('products')
-            ->where('id_category','=',$idCategory)
-            ->get();
     }
 
     public function createEstablishmentName($data){
@@ -83,17 +86,34 @@ class Miscellany extends Model
             ->insert($data);
     }
 
-    public function getItbis($idUser){
-        return $this->getBdd()
-            ->table('itbis')
-            ->where('id_user','=',$idUser)
-            ->get();
-    }
-
+    //Update
     public function updateItbis($idUser,$data){
         $this->getBdd()
             ->table('itbis')
             ->where('id_user','=',$idUser)
             ->update($data);
+    }
+
+    //Delete
+
+    public function deleteMeasurementUnits($id_unit_measurement){
+        $this->getBdd()
+            ->table('measurement_units')
+            ->where('id_unit_measurement','=',$id_unit_measurement)
+            ->delete();
+    }
+
+    public function deleteCategory($idCategory){
+        $this->getBdd()
+            ->table('categories')
+            ->where('id_category','=',$idCategory)
+            ->delete();
+    }
+
+    public function deleteEstablishmentName($idPurchase){
+        $this->getBdd()
+            ->table('names_establishments')
+            ->where('id_purchase','=',$idPurchase)
+            ->delete();
     }
 }

@@ -21,6 +21,21 @@ class ShoppingController extends Controller
         $request = $this->easy_request();
         switch ($request->server->get('REQUEST_METHOD')){
             case 'GET':
+                $shopping = new Shopping();
+                $miscellany = new Miscellany();
+
+                $idPurchase = $request->query->filter('id_purchase');
+                $purchase_details = $shopping->purchaseDetails($idPurchase);
+                $purchase = $shopping->purchase($idPurchase);
+                $namesEstablishment = $miscellany->namesEstablishments($idPurchase);
+                $itbis_quantity = $miscellany->getItbis($purchase->id_user);
+                echo json_encode([
+                    'status'=>'success',
+                    'purchase_details'=>$purchase_details,
+                    'purchase'=>$purchase,
+                    'establishment'=>$namesEstablishment,
+                    'itbis_quantity'=>$itbis_quantity
+                ]);
                 break;
             case 'POST':
                 $idPurchase = $this->createPurchase($request->request->filter('idUser'));
@@ -28,6 +43,17 @@ class ShoppingController extends Controller
                 $this->createEstablishmentName($request->request->filter('nameEstablishment'),$idPurchase);
                 echo json_encode([
                     'status'=>'success'
+                ]);
+                break;
+            case 'DELETE':
+                $idPurchase = $request->query->filter('id_purchase');
+                $shopping = new Shopping();
+                $miscellany = new Miscellany();
+                $shopping->deletePurchase($idPurchase);
+                $shopping->deletePurchaseDetails($idPurchase);
+                $miscellany->deleteEstablishmentName($idPurchase);
+                echo json_encode([
+                   'status'=>'success'
                 ]);
                 break;
         }

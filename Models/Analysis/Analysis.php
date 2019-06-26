@@ -15,7 +15,7 @@ class Analysis extends Model
 {
     public function shoppingHistory($idUser){
         return $this->getBdd()
-            ->query("SELECT names_establishments.name AS names_establishments, purchases.date,
+            ->query("SELECT purchases.id_purchase,names_establishments.name AS names_establishments, purchases.date,
 (
 SELECT
     SUM(
