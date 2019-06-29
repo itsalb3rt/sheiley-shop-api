@@ -66,11 +66,11 @@ class AuthController extends Controller
             }
 
             $user_data = [
-                'first_name'=>$request->request->get('first_name'),
-                'last_name'=>$request->request->get('last_name'),
-                'user_name'=>$request->request->get('user_name'),
-                'password'=>$this->encrypt_password($request->request->get('password')),
-                'email'=>$request->request->get('email'),
+                'first_name'=>$request->request->filter('first_name'),
+                'last_name'=>$request->request->filter('last_name'),
+                'user_name'=>strtolower($request->request->filter('user_name')),
+                'password'=>$this->encrypt_password($request->request->filter('password')),
+                'email'=>$request->request->filter('email'),
             ];
 
             $new_user = new User();
