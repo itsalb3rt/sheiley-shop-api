@@ -13,7 +13,14 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        header('Access-Control-Allow-Origin:http://localhost:8080');
+        $allowedOrigins = [
+            "http://localhost:8080",
+            "https://gibucket.a2hosted.com"
+        ];
+
+        if (in_array($_SERVER["HTTP_ORIGIN"], $allowedOrigins)) {
+            header("Access-Control-Allow-Origin: " . $_SERVER["HTTP_ORIGIN"]);
+        }
     }
 
     public function login(){
@@ -91,6 +98,17 @@ class AuthController extends Controller
                 'quantity'=>1,
                 'id_user'=>$idUser
             ]);
+
+            $miscellany->addMeasurementUnits([
+                'name' => 'UNIDAD',
+                'id_user' => $idUser
+            ]);
+
+            $miscellany->addCategory([
+               'name'=>'SIN CATEGORIA',
+                'id_user'=>$idUser
+            ]);
+
             echo json_encode(['status'=>'register']);
         }
     }
