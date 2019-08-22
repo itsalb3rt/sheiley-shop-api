@@ -11,16 +11,16 @@ class AnalysisController extends Controller
 {
     public function __construct()
     {
-        $allowedOrigins = [
-            "http://localhost:8080",
-            "https://gibucket.a2hosted.com"
-        ];
-
-        if (in_array($_SERVER["HTTP_ORIGIN"], $allowedOrigins)) {
-            header("Access-Control-Allow-Origin: " . $_SERVER["HTTP_ORIGIN"]);
-            header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
+        if(ENVIROMENT == 'dev'){
+            $origin = "http://localhost:8080";
+        }else{
+            $origin = "https://gibucket.a2hosted.com";
         }
+
+        header("Access-Control-Allow-Origin:$origin");
+        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     }
+
 
     public function shoppingHistory(){
         $request = $this->easy_request();
