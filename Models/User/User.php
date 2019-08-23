@@ -47,4 +47,16 @@ class User extends Model
             ->get();
     }
 
+    public function getUserById($id){
+        return $this->getBdd()
+        ->select('id_user,user_name,first_name,last_name,email')
+            ->table('users')
+            ->where('id_user','=',$id)
+            ->get();
+    }
+
+    public function updateUser($id,$data){
+        $this->getBdd()->table('users')->where('id_user','=',$id)->update($data);
+    }
+
 }
