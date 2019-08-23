@@ -16,7 +16,7 @@ class ProductsController extends Controller
         }else{
             $origin = "https://gibucket.a2hosted.com";
         }
-
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
         header("Access-Control-Allow-Origin:$origin");
         header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     }
