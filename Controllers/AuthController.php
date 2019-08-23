@@ -23,15 +23,6 @@ class AuthController extends Controller
         header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     }
 
-    public function login(){
-        $session = new SessionsController();
-
-        if($session->get('is_login') == true){
-            $this->redirect(['controller'=>'products','action'=>'list']);
-        }else{
-            $this->render('login','Login',false,'simple_layout');
-        }
-    }
 
     public function login_check(){
         $request = $this->easy_request();
@@ -54,13 +45,6 @@ class AuthController extends Controller
     public function logout(){
         $session = new SessionsController();
         $session->destroy_all_session();
-    }
-
-    public function register(){
-        $request = $this->easy_request();
-        if($request->request->get('islogin') == null){
-            $this->render('register','Register',false,'simple_layout');
-        }
     }
 
     public function register_user(){
