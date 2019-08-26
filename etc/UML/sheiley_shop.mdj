@@ -905,89 +905,6 @@
 						},
 						{
 							"_type": "ERDEntityView",
-							"_id": "AAAAAAFqohMzou2OmQ8=",
-							"_parent": {
-								"$ref": "AAAAAAFLzntJC6ElOqo="
-							},
-							"model": {
-								"$ref": "AAAAAAFqohMzou2Mxcc="
-							},
-							"subViews": [
-								{
-									"_type": "LabelView",
-									"_id": "AAAAAAFqohMzo+2PdGw=",
-									"_parent": {
-										"$ref": "AAAAAAFqohMzou2OmQ8="
-									},
-									"font": "Arial;13;1",
-									"left": 704,
-									"top": 29,
-									"width": 201.9453125,
-									"height": 13,
-									"text": "currencies"
-								},
-								{
-									"_type": "ERDColumnCompartmentView",
-									"_id": "AAAAAAFqohMzo+2QZEE=",
-									"_parent": {
-										"$ref": "AAAAAAFqohMzou2OmQ8="
-									},
-									"model": {
-										"$ref": "AAAAAAFqohMzou2Mxcc="
-									},
-									"subViews": [
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAFqohNU8O2cIm4=",
-											"_parent": {
-												"$ref": "AAAAAAFqohMzo+2QZEE="
-											},
-											"model": {
-												"$ref": "AAAAAAFqohNUue2ZBwQ="
-											},
-											"font": "Arial;13;0",
-											"left": 709,
-											"top": 52,
-											"width": 191.9453125,
-											"height": 13
-										},
-										{
-											"_type": "ERDColumnView",
-											"_id": "AAAAAAFqohOMPe2m2vs=",
-											"_parent": {
-												"$ref": "AAAAAAFqohMzo+2QZEE="
-											},
-											"model": {
-												"$ref": "AAAAAAFqohOMCO2jRMY="
-											},
-											"font": "Arial;13;0",
-											"left": 709,
-											"top": 67,
-											"width": 191.9453125,
-											"height": 13
-										}
-									],
-									"font": "Arial;13;0",
-									"left": 704,
-									"top": 47,
-									"width": 201.9453125,
-									"height": 38
-								}
-							],
-							"font": "Arial;13;0",
-							"left": 704,
-							"top": 24,
-							"width": 201.9453125,
-							"height": 61,
-							"nameLabel": {
-								"$ref": "AAAAAAFqohMzo+2PdGw="
-							},
-							"columnCompartment": {
-								"$ref": "AAAAAAFqohMzo+2QZEE="
-							}
-						},
-						{
-							"_type": "ERDEntityView",
 							"_id": "AAAAAAFqohbHlO3PWvY=",
 							"_parent": {
 								"$ref": "AAAAAAFLzntJC6ElOqo="
@@ -1724,35 +1641,6 @@
 							},
 							"lineStyle": 1,
 							"points": "783:518;762:519"
-						},
-						{
-							"_type": "UMLNoteView",
-							"_id": "AAAAAAFqolOcEqnnER0=",
-							"_parent": {
-								"$ref": "AAAAAAFLzntJC6ElOqo="
-							},
-							"font": "Arial;13;0",
-							"left": 936,
-							"top": 16,
-							"width": 129,
-							"height": 77,
-							"text": "Los diferentes tipos de moneras, esta tabla esta poblada por defecto "
-						},
-						{
-							"_type": "UMLNoteLinkView",
-							"_id": "AAAAAAFqolQYyansQVk=",
-							"_parent": {
-								"$ref": "AAAAAAFLzntJC6ElOqo="
-							},
-							"font": "Arial;13;0",
-							"head": {
-								"$ref": "AAAAAAFqohMzou2OmQ8="
-							},
-							"tail": {
-								"$ref": "AAAAAAFqolOcEqnnER0="
-							},
-							"lineStyle": 1,
-							"points": "935:54;906:54"
 						},
 						{
 							"_type": "UMLNoteView",
@@ -2696,37 +2584,6 @@
 							"referenceTo": {
 								"$ref": "AAAAAAFqofU4ruq1i7U="
 							}
-						}
-					]
-				},
-				{
-					"_type": "ERDEntity",
-					"_id": "AAAAAAFqohMzou2Mxcc=",
-					"_parent": {
-						"$ref": "AAAAAAFLzntJC6EktCk="
-					},
-					"name": "currencies",
-					"columns": [
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAFqohNUue2ZBwQ=",
-							"_parent": {
-								"$ref": "AAAAAAFqohMzou2Mxcc="
-							},
-							"name": "id_currency",
-							"type": "INTEGER",
-							"length": "11",
-							"primaryKey": true
-						},
-						{
-							"_type": "ERDColumn",
-							"_id": "AAAAAAFqohOMCO2jRMY=",
-							"_parent": {
-								"$ref": "AAAAAAFqohMzou2Mxcc="
-							},
-							"name": "symbol",
-							"type": "VARCHAR",
-							"length": "5"
 						}
 					]
 				},
