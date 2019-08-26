@@ -1,7 +1,7 @@
 {
     "name": "itsalb3rt/sheiley-shop-api",
     "description": "Sheiley Shop API REST",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
