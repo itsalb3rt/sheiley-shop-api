@@ -19,7 +19,6 @@ CREATE TABLE recovered_accounts (
     recovered_account_id int(11) NOT NULL AUTO_INCREMENT,
     id_user int(11) NOT NULL,
     single_use_token varchar(200) NOT NULL,
-    expired_token_date timestamp NOT NULL,
     PRIMARY KEY (recovered_account_id)
 ) ENGINE=InnoDB;
 
