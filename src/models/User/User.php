@@ -54,6 +54,14 @@ class User extends Model
             ->get();
     }
 
+    public function getByEmail($email){
+        return $this->db()
+            ->select('id_user,user_name,first_name,last_name,email')
+            ->table('users')
+            ->where('email','=',$email)
+            ->get();
+    }
+
     public function updateUser($id,$data){
         $this->db()->table('users')->where('id_user','=',$id)->update($data);
     }

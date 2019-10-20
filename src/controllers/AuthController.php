@@ -9,7 +9,9 @@ use App\models\User\User;
 use App\models\Miscellany\Miscellany;
 use Ligne\SessionsController;
 use Symfony\Component\HttpFoundation\Request;
-
+use Ingenerator\Tokenista;
+use App\plugins\AccountRecoveryEmailSend;
+use App\models\AccountRecovery\AccountRecovery;
 
 class AuthController extends Controller
 {
@@ -99,6 +101,63 @@ class AuthController extends Controller
         }
     }
 
+    public function resetPassword(){
+        $request = Request::createFromGlobals();
+        if($request->server->get('REQUEST_METHOD') === 'POST'){
+            $token = $request->request->filter('token');
+            $tokenista = new Tokenista('sheileyshop',["lifetime"=>7200]);
+            $accountRecovery = new AccountRecovery();
+            $accountData = $accountRecovery->getByToken($token);
+
+            if($tokenista->isValid($token) === true && $tokenista->isExpired($token) === false && !empty($accountData)){
+                $password = $request->request->filter('password');
+                $confirmPassword = $request->request->filter('confirm_password');
+                $user = new User();
+
+                if($this->password_match($password,$confirmPassword)){
+                    $user->updateUser($accountData->id_user,[
+                        'password'=>$this->encrypt_password($password)
+                    ]);
+                    $accountRecovery->removeAccountRecoveryInformation($accountData->id_user);
+                    http_response_code(200);
+                    echo json_encode(['status'=>'success']);
+                }else{
+                    http_response_code(409);
+                    echo json_encode(['status'=>'error','message'=>'password not match']);
+                }
+            }else{
+                http_response_code(401);
+                echo json_encode(['status'=>'error','message'=>'the token is not valid']);
+            }
+        }
+    }
+
+    public function recovery(){
+        $request = Request::createFromGlobals();
+        if($request->server->get('REQUEST_METHOD') === 'POST'){
+            $email = $request->request->filter('email');
+            $user = new User();
+
+            if($user->isExitsEmail($email)->count > 0){
+                $token = 'sheileyshop';
+                $tokenista = new Tokenista($token,["lifetime"=>7200]);
+                $token = $tokenista->generate();
+                $userData = $user->getByEmail($email);
+                $accountRecovery = new AccountRecovery();
+                $accountRecovery->removeAccountRecoveryInformation($userData->id_user);
+                $accountRecovery->setAccountRecoveryInformation([
+                    'id_user'=>$userData->id_user,
+                    "single_use_token"=>$token
+                ]);
+                $emailSend = new AccountRecoveryEmailSend($email,$token);
+                $emailSend->send();
+                echo json_encode(['status'=>'success']);
+            }else{
+                echo json_encode(['status'=>'error','message'=>'email no exists']);
+            }
+        }
+    }
+
     public function userAlreadyExists($userName){
          $request = Request::createFromGlobals();
         if($request->server->get('REQUEST_METHOD') == 'GET'){
@@ -122,6 +181,7 @@ class AuthController extends Controller
             }
         }
     }
+
     //Utils Private
 
     private function createUserSession(object $user){

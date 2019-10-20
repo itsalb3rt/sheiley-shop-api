@@ -11,6 +11,8 @@
       <path value="$PROJECT_DIR$/vendor/ligne/error-handler" />
       <path value="$PROJECT_DIR$/vendor/izniburak/pdox" />
       <path value="$PROJECT_DIR$/vendor/ligne/session" />
+      <path value="$PROJECT_DIR$/vendor/ingenerator/tokenista" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

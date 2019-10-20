@@ -23,12 +23,12 @@ class AccountRecoveryEmailSend
         $mail->SMTPDebug = 0; //debug off = 0, debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = true; // authentication enabled
         $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-        $mail->Host = "mail host";
+        $mail->Host = "the email host";
         $mail->Port = 465; // or 587
         $mail->IsHTML(true);
-        $mail->Username = "serveremail@domain.com";
-        $mail->Password = "password";
-        $mail->SetFrom("serveremail@domain.com");
+        $mail->Username = "your email";
+        $mail->Password = "your password";
+        $mail->SetFrom("your email again");
         $mail->Subject = "Sheiley Shop account recovery";
         $mail->Body = $this->getBodyMessage();
         $mail->AddAddress($this->emailDestinatary);

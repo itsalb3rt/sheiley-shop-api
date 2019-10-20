@@ -5,9 +5,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/system" isTestSource="false" packagePrefix="System\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ingenerator/tokenista" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/izniburak/pdox" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ligne/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ligne/session" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpmailer/phpmailer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-idn" />
