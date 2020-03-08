@@ -6,17 +6,17 @@
  * Time: 7:45 PM
  */
 
-namespace App\models\User;
+namespace App\models\Users;
 
 use System\Model;
 
-class User extends Model
+class Users extends Model
 {
     /**
      * @param $user | Array
      * @return int
      */
-    public function registerUser(Array $user):int {
+    public function create(Array $user):int {
         $this->db()
             ->table('users')
             ->insert($user);
@@ -39,16 +39,15 @@ class User extends Model
             ->get();
     }
 
-    public function getUser($userName){
+    public function getByUserName($userName){
         return $this->db()
             ->table('users')
             ->where('user_name','=',$userName)
             ->get();
     }
 
-    public function getUserById($id){
+    public function getById($id){
         return $this->db()
-        ->select('id_user,user_name,first_name,last_name,email')
             ->table('users')
             ->where('id_user','=',$id)
             ->get();
@@ -62,7 +61,7 @@ class User extends Model
             ->get();
     }
 
-    public function updateUser($id,$data){
+    public function update($id, $data){
         $this->db()->table('users')->where('id_user','=',$id)->update($data);
     }
 
