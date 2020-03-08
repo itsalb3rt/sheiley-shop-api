@@ -1,6 +1,6 @@
 <?php
 
-use App\models\User\User;
+use App\models\Users\Users;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -24,8 +24,8 @@ class UserController extends Controller
 
         switch ($request->server->get('REQUEST_METHOD')) {
             case 'GET':
-                $user = new User();
-                $user = $user->getUserById($id);
+                $user = new Users();
+                $user = $user->getById($id);
 
                 if (empty($user)) {
                     echo json_encode(['message' => 'user not found']);
@@ -54,8 +54,8 @@ class UserController extends Controller
                     }
                 }
                 
-                $userModel = new User();
-                $userModel->updateUser($user->id_user,$updateData);
+                $userModel = new Users();
+                $userModel->update($user->id_user,$updateData);
                 echo json_encode(['message' => 'success']);
                 http_response_code(200);
                 break;
