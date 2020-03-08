@@ -5,86 +5,93 @@
  * Date: 2/6/2019
  * Time: 4:57 PM
  */
-use App\models\User\User;
+
+use App\models\Users\Users;
 use App\models\Miscellany\Miscellany;
+use App\plugins\RestResponse;
 use Ligne\SessionsController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Ingenerator\Tokenista;
 use App\plugins\AccountRecoveryEmailSend;
 use App\models\AccountRecovery\AccountRecovery;
+use App\plugins\SecureApi;
 
 class AuthController extends Controller
 {
+
+    private $request;
+    private $response;
+
     public function __construct()
     {
-        if(ENVIROMENT == 'dev'){
-            $origin = "http://localhost:8080";
-        }else{
-            $origin = "https://gibucket.a2hosted.com";
-        }
-        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-        header("Access-Control-Allow-Origin:$origin");
-        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
+        new SecureApi(true);
+        $this->request = Request::createFromGlobals();
+        $this->response = new Response();
     }
 
 
-    public function login_check(){
-         $request = Request::createFromGlobals();
+    public function login()
+    {
+        $request = Request::createFromGlobals();
 
-        if($request->getMethod() == 'POST'){
-            $new_login = new User();
-            $user_credentials = $new_login->getUser( strtolower( $request->request->filter('user_name') ) );
+        if ($request->getMethod() == 'POST') {
+            $requestUser = json_decode($this->request->getContent());
+            $users = new Users();
 
-            if( empty($user_credentials) === false
-                && password_verify($request->request->filter('password'),$user_credentials->password)){
+            $userCredentials = $users->getByUserName(strtolower($requestUser->user_name));
 
-                $this->createUserSession($user_credentials);
-                echo json_encode(['status'=>'login_correct','user'=>$user_credentials]);
-            }else{
-                echo json_encode(['status'=>'login_failed']);
+            if (empty($userCredentials) === false
+                && password_verify($requestUser->password, $userCredentials->password)) {
+                $token = new Tokenista('sheiley');
+                $users->update($userCredentials->id_user, ['token' => $token->generate()]);
+
+                new RestResponse($users->getById($userCredentials->id_user), 200);
+                return;
+            } else {
+                new RestResponse([], 401, 'wrong credentials', ['wrong credentials']);
             }
         }
+        return;
     }
 
-    public function logout(){
-        $session = new SessionsController();
-        $session->destroy_all_session();
-    }
+    public function register()
+    {
+        $newUser = json_decode($this->request->getContent());
+        if ($this->request->server->get('REQUEST_METHOD') == 'POST') {
 
-    public function register_user(){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-
-            if(!$this->password_match($request->request->get('password'),$request->request->get('password2'))){
-                echo json_encode(['status'=>'bad_password']);
-                exit();
+            if (!$this->password_match($newUser->password, $newUser->password2)) {
+                new RestResponse([], 409, '', ['password not match']);
+                return;
             }
 
+            $token = new Tokenista('sheiley');
             $user_data = [
-                'first_name'=>$request->request->filter('first_name'),
-                'last_name'=>$request->request->filter('last_name'),
-                'user_name'=>strtolower($request->request->filter('user_name')),
-                'password'=>$this->encrypt_password($request->request->filter('password')),
-                'email'=>$request->request->filter('email'),
+                'first_name' => $newUser->first_name,
+                'last_name' => $newUser->last_name,
+                'user_name' => strtolower($newUser->user_name),
+                'password' => $this->encrypt_password($newUser->password),
+                'email' => $newUser->email,
+                'token' => $token->generate()
             ];
 
-            $new_user = new User();
+            $users = new Users();
 
-            if( $new_user->isExitsUserName($user_data['user_name'])->count > 0){
-                echo json_encode(['status'=>'user_exists']);
-                exit();
+            if ($users->isExitsUserName($newUser->user_name)->count > 0) {
+                new RestResponse([], 409, 'user exists', ['user exists']);
+                return;
             }
 
-            if( $new_user->isExitsEmail($user_data['email'])->count > 0){
-                echo json_encode(['status'=>'email_exists']);
-                exit();
+            if ($users->isExitsEmail($newUser->email)->count > 0) {
+                new RestResponse([], 409, 'email exists', ['email exists']);
+                return;
             }
 
-            $idUser = $new_user->registerUser($user_data);
+            $idUser = $users->create($user_data);
             $miscellany = new Miscellany();
             $miscellany->createInitialItbis([
-                'quantity'=>1,
-                'id_user'=>$idUser
+                'quantity' => 1,
+                'id_user' => $idUser
             ]);
 
             $miscellany->addMeasurementUnits([
@@ -93,115 +100,114 @@ class AuthController extends Controller
             ]);
 
             $miscellany->addCategory([
-               'name'=>'SIN CATEGORIA',
-                'id_user'=>$idUser
+                'name' => 'SIN CATEGORIA',
+                'id_user' => $idUser
             ]);
-
-            echo json_encode(['status'=>'register']);
+            $newUser = $users->getById($idUser);
+            unset($newUser->password);
+            new RestResponse($newUser, 201);
+            return;
         }
     }
 
-    public function resetPassword(){
+    public function resetPassword()
+    {
         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') === 'POST'){
+        if ($request->server->get('REQUEST_METHOD') === 'POST') {
             $token = $request->request->filter('token');
-            $tokenista = new Tokenista('sheileyshop',["lifetime"=>7200]);
+            $tokenista = new Tokenista('sheileyshop', ["lifetime" => 7200]);
             $accountRecovery = new AccountRecovery();
             $accountData = $accountRecovery->getByToken($token);
 
-            if($tokenista->isValid($token) === true && $tokenista->isExpired($token) === false && !empty($accountData)){
+            if ($tokenista->isValid($token) === true && $tokenista->isExpired($token) === false && !empty($accountData)) {
                 $password = $request->request->filter('password');
                 $confirmPassword = $request->request->filter('confirm_password');
-                $user = new User();
+                $user = new Users();
 
-                if($this->password_match($password,$confirmPassword)){
-                    $user->updateUser($accountData->id_user,[
-                        'password'=>$this->encrypt_password($password)
+                if ($this->password_match($password, $confirmPassword)) {
+                    $user->update($accountData->id_user, [
+                        'password' => $this->encrypt_password($password)
                     ]);
                     $accountRecovery->removeAccountRecoveryInformation($accountData->id_user);
                     http_response_code(200);
-                    echo json_encode(['status'=>'success']);
-                }else{
+                    echo json_encode(['status' => 'success']);
+                } else {
                     http_response_code(409);
-                    echo json_encode(['status'=>'error','message'=>'password not match']);
+                    echo json_encode(['status' => 'error', 'message' => 'password not match']);
                 }
-            }else{
+            } else {
                 http_response_code(401);
-                echo json_encode(['status'=>'error','message'=>'the token is not valid']);
+                echo json_encode(['status' => 'error', 'message' => 'the token is not valid']);
             }
         }
     }
 
-    public function recovery(){
+    public function recovery()
+    {
         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') === 'POST'){
+        if ($request->server->get('REQUEST_METHOD') === 'POST') {
             $email = $request->request->filter('email');
-            $user = new User();
+            $user = new Users();
 
-            if($user->isExitsEmail($email)->count > 0){
+            if ($user->isExitsEmail($email)->count > 0) {
                 $token = 'sheileyshop';
-                $tokenista = new Tokenista($token,["lifetime"=>7200]);
+                $tokenista = new Tokenista($token, ["lifetime" => 7200]);
                 $token = $tokenista->generate();
                 $userData = $user->getByEmail($email);
                 $accountRecovery = new AccountRecovery();
                 $accountRecovery->removeAccountRecoveryInformation($userData->id_user);
                 $accountRecovery->setAccountRecoveryInformation([
-                    'id_user'=>$userData->id_user,
-                    "single_use_token"=>$token
+                    'id_user' => $userData->id_user,
+                    "single_use_token" => $token
                 ]);
-                $emailSend = new AccountRecoveryEmailSend($email,$token);
+                $emailSend = new AccountRecoveryEmailSend($email, $token);
                 $emailSend->send();
-                echo json_encode(['status'=>'success']);
-            }else{
-                echo json_encode(['status'=>'error','message'=>'email no exists']);
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'email no exists']);
             }
         }
     }
 
-    public function userAlreadyExists($userName){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET'){
-            $user = new User();
-            if($user->isExitsUserName($userName)->count > 0){
-                echo json_encode(['status'=>'true']);
-            }else{
-                echo json_encode(['status'=>'false']);
+    public function userAlreadyExists($userName)
+    {
+        $request = Request::createFromGlobals();
+        if ($request->server->get('REQUEST_METHOD') == 'GET') {
+            $user = new Users();
+            if ($user->isExitsUserName($userName)->count > 0) {
+                echo json_encode(['status' => 'true']);
+            } else {
+                echo json_encode(['status' => 'false']);
             }
         }
     }
-    public function emailAlreadyExists(){
-         $request = Request::createFromGlobals();
 
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-            $user = new User();
-            if($user->isExitsEmail($request->request->filter('email'))->count > 0){
-                echo json_encode(['status'=>'true']);
-            }else{
-                echo json_encode(['status'=>'false']);
+    public function emailAlreadyExists()
+    {
+        $request = Request::createFromGlobals();
+
+        if ($request->server->get('REQUEST_METHOD') == 'POST') {
+            $user = new Users();
+            if ($user->isExitsEmail($request->request->filter('email'))->count > 0) {
+                echo json_encode(['status' => 'true']);
+            } else {
+                echo json_encode(['status' => 'false']);
             }
         }
     }
 
     //Utils Private
 
-    private function createUserSession(object $user){
-        $session = new SessionsController();
-        $session->set('id_user',$user->id_user)
-            ->set('user_name',$user->user_name)
-            ->set('first_name',$user->first_name)
-            ->set('last_name',$user->last_name)
-            ->set('email',$user->email)
-            ->set('is_login','true');
-    }
-
-    private function password_match($password1,$password2){
-        if($password1 == $password2)
+    private function password_match($password1, $password2)
+    {
+        if ($password1 == $password2)
             return true;
         else
             return false;
     }
 
-    private function encrypt_password($password){
-        return password_hash($password,PASSWORD_ARGON2I);
+    private function encrypt_password($password)
+    {
+        return password_hash($password, PASSWORD_ARGON2I);
     }
 }
