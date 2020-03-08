@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1de72a39-7124-4dbe-8d74-fe7962439ce4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ligne_php_pro_v2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ligne_php_pro_v2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plugins/RestResponse.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/plugins/SecureApi.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/etc/boceto/sheiley_shop.xd" beforeDir="false" afterPath="$PROJECT_DIR$/etc/boceto/sheiley_shop.xd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/AccountRecovery/AccountRecovery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AccountRecovery/AccountRecovery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Users/Users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/plugins/AccountRecoveryEmailSend.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/AccountRecoveryEmailSend.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,10 +49,13 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gibucket" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ses_api" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\sheiley_shop_api\src\plugins" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\ligne_php_pro_v2\src\models\Tasks" />
       <recent name="C:\wamp64\www\ligne_php_pro_v2" />
@@ -101,7 +102,13 @@
       <workItem from="1566856044784" duration="3463000" />
       <workItem from="1567448583153" duration="68000" />
       <workItem from="1567726665398" duration="62000" />
-      <workItem from="1571518082399" duration="11244000" />
+      <workItem from="1571518082399" duration="12544000" />
+      <workItem from="1571708166850" duration="7000" />
+      <workItem from="1571712454284" duration="1590000" />
+      <workItem from="1571753570262" duration="35000" />
+      <workItem from="1572521170061" duration="3664000" />
+      <workItem from="1577740617298" duration="2790000" />
+      <workItem from="1583595504152" duration="7435000" />
     </task>
     <task id="LOCAL-00001" summary="A non-empty PSR-4 prefix must end with a namespace separator">
       <created>1564684938196</created>
