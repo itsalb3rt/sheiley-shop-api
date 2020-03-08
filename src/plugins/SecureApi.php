@@ -9,7 +9,7 @@
 
 namespace App\plugins;
 
-use App\models\users\UsersModel;
+use App\models\Users\Users;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -52,7 +52,7 @@ class SecureApi
     private function isTokenValid(): void
     {
         $userToken = str_replace('Bearer ', '', $this->request->headers->get('authorization'));
-        $user = new UsersModel();
+        $user = new Users();
         $user = $user->getByToken($userToken);
 
         if (empty($user)) {
