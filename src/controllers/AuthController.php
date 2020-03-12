@@ -21,13 +21,11 @@ class AuthController extends Controller
 {
 
     private $request;
-    private $response;
 
     public function __construct()
     {
         new SecureApi(true);
         $this->request = Request::createFromGlobals();
-        $this->response = new Response();
     }
 
 
