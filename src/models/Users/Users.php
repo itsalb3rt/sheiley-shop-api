@@ -53,6 +53,13 @@ class Users extends Model
             ->get();
     }
 
+    public function getByToken($token){
+        return $this->db()
+            ->table('users')
+            ->where('token','=',$token)
+            ->get();
+    }
+
     public function getByEmail($email){
         return $this->db()
             ->select('id_user,user_name,first_name,last_name,email')
