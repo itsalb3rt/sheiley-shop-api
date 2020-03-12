@@ -9,9 +9,7 @@
 use App\models\Users\Users;
 use App\models\Miscellany\Miscellany;
 use App\plugins\RestResponse;
-use Ligne\SessionsController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Ingenerator\Tokenista;
 use App\plugins\AccountRecoveryEmailSend;
 use App\models\AccountRecovery\AccountRecovery;
