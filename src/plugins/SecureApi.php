@@ -51,12 +51,11 @@ class SecureApi
 
     private function isTokenValid(): void
     {
-        $userToken = str_replace('Bearer ', '', $this->request->headers->get('authorization'));
+        $userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
         $user = new Users();
         $user = $user->getByToken($userToken);
 
         if (empty($user)) {
-            $this->response->setContent('Forbidden');
             $this->response->setStatusCode(403);
             $this->response->send();
             die();
