@@ -18,7 +18,8 @@ class MeasurementunitsController extends Controller
         $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
     }
 
-    public function measurementunits($id = null){
+    public function measurementunits($id = null)
+    {
         $user = new Users();
         $user = $user->getByToken($this->userToken);
         switch ($this->request->server->get('REQUEST_METHOD')) {
@@ -34,25 +35,27 @@ class MeasurementunitsController extends Controller
                 $this->add();
                 break;
             case 'PATCH':
-                new RestResponse(null,405,"Method Not Allowed");
+                new RestResponse(null, 405, "Method Not Allowed");
                 break;
             case 'DELETE':
-                $this->delete();
+                $this->delete($id);
                 break;
         }
     }
 
-    private function get($id_user){
+    private function get($id_user)
+    {
         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET'){
+        if ($request->server->get('REQUEST_METHOD') == 'GET') {
             $miscellany = new Miscellany();
             echo json_encode($miscellany->measurementUnits($id_user));
         }
     }
 
-    private function add(){
+    private function add()
+    {
 
-        if($this->request->server->get('REQUEST_METHOD') == 'POST'){
+        if ($this->request->server->get('REQUEST_METHOD') == 'POST') {
             $user = new Users();
             $user = $user->getByToken($this->userToken);
 
@@ -60,28 +63,37 @@ class MeasurementunitsController extends Controller
             $measurementUnits = new MeasurementUnits();
 
             $insertId = $measurementUnits->create([
-                'name'=>$newMeasurementUnit['name'],
-                'id_user'=>$user->id_user,
+                'name' => $newMeasurementUnit['name'],
+                'id_user' => $user->id_user,
             ]);
-            new RestResponse($measurementUnits->getById($insertId,$user->id_user),201,'measurement unit created');
+            new RestResponse($measurementUnits->getById($insertId, $user->id_user), 201, 'measurement unit created');
             return;
         }
     }
 
 
-    private function delete($idUnitMeasurement = null){
-        $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET' && $idUnitMeasurement != null){
-            $miscellany = new Miscellany();
-            $result = null;
-            if($this->measurementUnitHasDependency($idUnitMeasurement)){
-                $result = ['status'=>'hasDependency'];
-            }else{
-                $miscellany->deleteMeasurementUnits($idUnitMeasurement);
-                $result = ['status'=>'success'];
-            }
+    private function delete($idUnitMeasurement = null)
+    {
+        $measurementUnits = new MeasurementUnits();
+        $result = null;
+        if ($this->measurementUnitHasDependency($idUnitMeasurement)) {
+            new RestResponse(null, 409, 'this measurement unit has products dependencies');
+            return;
+        }
 
-            echo json_encode($result);
+        $measurementUnits->delete($idUnitMeasurement);
+        new RestResponse(null, 200, 'deleted');
+        return;
+    }
+
+    private function measurementUnitHasDependency(int $idMeasurementUnit): bool
+    {
+        $measurementUnits = new MeasurementUnits();
+        $result = $measurementUnits->countProductsWithMeasurementUnits($idMeasurementUnit);
+        if ($result->count > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
