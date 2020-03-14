@@ -37,7 +37,7 @@ class CategoriesController extends Controller
                 new RestResponse(null,405,"Method Not Allowed");
                 break;
             case 'DELETE':
-                $this->delete();
+                $this->delete($id);
                 break;
         }
     }
@@ -69,7 +69,7 @@ class CategoriesController extends Controller
             }
 
             $categories->delete($idCategory);
-            new RestResponse(null,200,'category deleted');
+            new RestResponse(null,200,'deleted');
             return;
         }
     }
