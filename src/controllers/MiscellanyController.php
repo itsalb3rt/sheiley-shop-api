@@ -84,50 +84,6 @@ class MiscellanyController extends Controller
         }
     }
 
-    public function addCategory(){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-
-            $miscellany = new Miscellany();
-            $insertId = $miscellany->addCategory([
-                'name'=>$request->request->get('name'),
-                'id_user'=>$request->request->get('id_user'),
-            ]);
-            echo json_encode([
-                'status'=>'success',
-                'data'=>[
-                    'id'=>$insertId,
-                    'name'=>$request->request->get('name')
-                ]
-            ]);
-        }
-    }
-
-    public function deleteCategory($idCategory = null):void {
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET' && $idCategory != null){
-            $miscellany = new Miscellany();
-            $result = null;
-            if($this->categoryhasDependency($idCategory)){
-                $result = ['status'=>'hasDependency'];
-            }else{
-                $miscellany->deleteCategory($idCategory);
-                $result = ['status'=>'success'];
-            }
-            echo json_encode($result);
-        }
-    }
-
-    private function categoryhasDependency(int $idCategory):bool {
-        $miscellany = new Miscellany();
-        $result = $miscellany->countProductsWithCategory($idCategory);
-        if($result->count > 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public function itbis(){
          $request = Request::createFromGlobals();
 

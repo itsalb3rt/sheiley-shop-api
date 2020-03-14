@@ -28,21 +28,6 @@ class Miscellany extends Model
             ->get();
     }
 
-    public function countProductsWithCategory($idCategory){
-        return $this->db()
-            ->count('id_category','count')
-            ->table('products')
-            ->where('id_category','=',$idCategory)
-            ->get();
-    }
-
-    public function categories($id_user){
-        return $this->db()
-            ->table('categories')
-            ->where('id_user','=',$id_user)
-            ->getAll();
-    }
-
     public function countProductsWithMeasurementUnits($idMeasurementUnit){
         return $this->db()
             ->count('id_category','count')
@@ -67,12 +52,7 @@ class Miscellany extends Model
         return $this->db()->insertId();
     }
 
-    public function addCategory($data){
-        $this->db()
-            ->table('categories')
-            ->insert($data);
-        return $this->db()->insertId();
-    }
+
 
     public function createEstablishmentName($data){
         $this->db()
@@ -100,13 +80,6 @@ class Miscellany extends Model
         $this->db()
             ->table('measurement_units')
             ->where('id_unit_measurement','=',$id_unit_measurement)
-            ->delete();
-    }
-
-    public function deleteCategory($idCategory){
-        $this->db()
-            ->table('categories')
-            ->where('id_category','=',$idCategory)
             ->delete();
     }
 
