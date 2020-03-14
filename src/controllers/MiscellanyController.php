@@ -22,60 +22,6 @@ class MiscellanyController extends Controller
         header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     }
 
-
-    public function measurementUnits($id_user){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET'){
-            $miscellany = new Miscellany();
-            echo json_encode($miscellany->measurementUnits($id_user));
-        }
-    }
-
-    public function addMeasurementUnit(){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-
-            $miscellany = new Miscellany();
-            $insertId = $miscellany->addMeasurementUnits([
-                'name'=>$request->request->get('name'),
-                'id_user'=>$request->request->get('id_user'),
-            ]);
-            echo json_encode([
-                'status'=>'success',
-                'data'=>[
-                    'id'=>$insertId,
-                    'name'=>$request->request->get('name')
-                ]
-            ]);
-        }
-    }
-
-    public function deleteMeasurementUnit($idUnitMeasurement = null){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET' && $idUnitMeasurement != null){
-            $miscellany = new Miscellany();
-            $result = null;
-            if($this->measurementUnitHasDependency($idUnitMeasurement)){
-                $result = ['status'=>'hasDependency'];
-            }else{
-                $miscellany->deleteMeasurementUnits($idUnitMeasurement);
-                $result = ['status'=>'success'];
-            }
-
-            echo json_encode($result);
-        }
-    }
-
-    private function measurementUnitHasDependency(int $idMeasurementUnit):bool {
-        $miscellany = new Miscellany();
-        $result = $miscellany->countProductsWithMeasurementUnits($idMeasurementUnit);
-        if($result->count > 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public function categories($idUser){
          $request = Request::createFromGlobals();
         if($request->server->get('REQUEST_METHOD') == 'GET'){
