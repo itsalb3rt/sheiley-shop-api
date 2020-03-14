@@ -18,7 +18,8 @@ class CategoriesController extends Controller
         $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
     }
 
-    public function categories($id = null){
+    public function categories($id = null)
+    {
         $user = new Users();
         $user = $user->getByToken($this->userToken);
         switch ($this->request->server->get('REQUEST_METHOD')) {
@@ -34,7 +35,7 @@ class CategoriesController extends Controller
                 $this->add();
                 break;
             case 'PATCH':
-                new RestResponse(null,405,"Method Not Allowed");
+                new RestResponse(null, 405, "Method Not Allowed");
                 break;
             case 'DELETE':
                 $this->delete($id);
@@ -42,45 +43,46 @@ class CategoriesController extends Controller
         }
     }
 
-    private function add(){
+    private function add()
+    {
         $user = new Users();
         $user = $user->getByToken($this->userToken);
 
-        if($this->request->server->get('REQUEST_METHOD') == 'POST'){
+        if ($this->request->server->get('REQUEST_METHOD') == 'POST') {
             $newCategory = json_decode($this->request->getContent(), true);
             $categories = new Categories();
             $insertId = $categories->create([
-                'name'=>$newCategory['name'],
-                'id_user'=>$user->id_user,
+                'name' => $newCategory['name'],
+                'id_user' => $user->id_user,
             ]);
 
-            new RestResponse($categories->getById($insertId,$user->id_user),201,'category created');
+            new RestResponse($categories->getById($insertId, $user->id_user), 201, 'category created');
             return;
         }
     }
 
-    private function delete($idCategory = null) {
-        if($this->request->server->get('REQUEST_METHOD') == 'GET' && $idCategory != null){
-            $categories = new Categories();
-            $result = null;
-            if($this->categoryhasDependency($idCategory)){
-                new RestResponse(null,409,'this category has products dependencies');
-                return;
-            }
-
-            $categories->delete($idCategory);
-            new RestResponse(null,200,'deleted');
+    private function delete($idCategory = null)
+    {
+        $categories = new Categories();
+        $result = null;
+        if ($this->categoryhasDependency($idCategory)) {
+            new RestResponse(null, 409, 'this category has products dependencies');
             return;
         }
+
+        $categories->delete($idCategory);
+        new RestResponse(null, 200, 'deleted');
+        return;
     }
 
 
-    private function categoryhasDependency(int $idCategory):bool {
+    private function categoryhasDependency(int $idCategory): bool
+    {
         $categories = new Categories();
         $result = $categories->countProductsWithCategory($idCategory);
-        if($result->count > 0){
+        if ($result->count > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
