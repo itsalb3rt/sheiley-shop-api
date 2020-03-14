@@ -11,20 +11,17 @@ namespace App\plugins;
 
 use App\models\Users\Users;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class SecureApi
 {
     private $publicArea;
     private $request;
-    private $response;
     private $acceptOrigin = (ENVIROMENT == 'dev') ? "*" : "https://gibucket.a2hosted.com";
 
     public function __construct(bool $publicArea = false)
     {
         $this->publicArea = $publicArea;
         $this->request = Request::createFromGlobals();
-        $this->response = new Response();
 
         $this->cors();
 
@@ -56,8 +53,7 @@ class SecureApi
         $user = $user->getByToken($userToken);
 
         if (empty($user)) {
-            $this->response->setStatusCode(403);
-            $this->response->send();
+            new RestResponse(null ,403,'Invalid token');
             die();
         }
     }
