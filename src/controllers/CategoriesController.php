@@ -34,8 +34,10 @@ class CategoriesController extends Controller
                 $this->add();
                 break;
             case 'PATCH':
+                new RestResponse(null,405,"Method Not Allowed");
                 break;
             case 'DELETE':
+                $this->delete();
                 break;
         }
     }
