@@ -57,9 +57,11 @@ class ProductsController extends Controller
     {
         $products = new Products();
         $product = json_decode($this->request->getContent(), true);
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
 
         $products->update($idProduct, $product);
-        new RestResponse($products->getById($idProduct), 200, 'product updated');
+        new RestResponse($products->getById($user->id_user,$idProduct), 200, 'product updated');
     }
 
     private function add()
