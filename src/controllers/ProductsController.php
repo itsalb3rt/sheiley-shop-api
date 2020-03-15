@@ -79,7 +79,7 @@ class ProductsController extends Controller
         }
         $product['id_user'] = $user->id_user;
         $insertId = $products->add($product);
-        $product = $products->getById($insertId);
+        $product = $products->getById($user->id_user,$insertId);
         new RestResponse($product, 201,'product created');
         return;
 
