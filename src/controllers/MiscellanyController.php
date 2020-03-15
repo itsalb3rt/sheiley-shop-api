@@ -29,26 +29,4 @@ class MiscellanyController extends Controller
             echo json_encode($miscellany->categories($idUser));
         }
     }
-
-    public function itbis(){
-         $request = Request::createFromGlobals();
-
-        switch ($request->server->get('REQUEST_METHOD')){
-            case 'GET':
-                $idUser = $request->query->filter('id_user');
-                $miscellany = new Miscellany();
-                echo json_encode($miscellany->getItbis($idUser));
-                break;
-            case 'POST':
-                $miscellany = new Miscellany();
-                $miscellany->updateItbis($request->request->filter('id_user'),
-                    [
-                        'quantity'=>$request->request->filter('quantity')
-                    ]
-                );
-                echo json_encode(['status'=>'success']);
-                break;
-        }
-    }
-
 }

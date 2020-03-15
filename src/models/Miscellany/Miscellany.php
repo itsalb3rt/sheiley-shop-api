@@ -21,13 +21,6 @@ class Miscellany extends Model
             ->get();
     }
 
-    public function getItbis($idUser){
-        return $this->db()
-            ->table('itbis')
-            ->where('id_user','=',$idUser)
-            ->get();
-    }
-
     //Creaters
 
     public function createEstablishmentName($data){
@@ -40,14 +33,6 @@ class Miscellany extends Model
         $this->db()
             ->table('itbis')
             ->insert($data);
-    }
-
-    //Update
-    public function updateItbis($idUser,$data){
-        $this->db()
-            ->table('itbis')
-            ->where('id_user','=',$idUser)
-            ->update($data);
     }
 
     //Delete
