@@ -18,6 +18,7 @@ class Products extends Model
         return $this->db()
             ->table('products')
             ->where('id_user', '=', $idUser)
+            ->orderBy('name','ASC')
             ->getAll();
     }
 
