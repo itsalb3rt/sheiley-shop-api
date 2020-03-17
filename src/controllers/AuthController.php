@@ -41,8 +41,9 @@ class AuthController extends Controller
                 && password_verify($requestUser->password, $userCredentials->password)) {
                 $token = new Tokenista('sheiley');
                 $users->update($userCredentials->id_user, ['token' => $token->generate()]);
-
-                new RestResponse($users->getById($userCredentials->id_user), 200);
+                $users = $users->getById($userCredentials->id_user);
+                unset($users->password);
+                new RestResponse($users, 200, 'user logged');
                 return;
             } else {
                 new RestResponse([], 401, 'wrong credentials', ['wrong credentials']);
