@@ -141,9 +141,15 @@ class AuthController extends Controller
 
     public function recovery()
     {
-        $request = Request::createFromGlobals();
-        if ($request->server->get('REQUEST_METHOD') === 'POST') {
-            $email = $request->request->filter('email');
+        if ($this->request->server->get('REQUEST_METHOD') === 'POST') {
+            $recoveryAccount = json_decode($this->request->getContent());
+
+            if(!isset($recoveryAccount->email)){
+                new RestResponse([],409,'email not found',['email not found']);
+                return;
+            }
+
+            $email = $recoveryAccount->email;
             $user = new Users();
 
             if ($user->isExitsEmail($email)->count > 0) {
@@ -159,37 +165,54 @@ class AuthController extends Controller
                 ]);
                 $emailSend = new AccountRecoveryEmailSend($email, $token);
                 $emailSend->send();
-                echo json_encode(['status' => 'success']);
+                new RestResponse([],200,'email send');
+                return;
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'email no exists']);
+                new RestResponse([],409,'email no register',['email no register']);
+                return;
             }
         }
     }
 
-    public function userAlreadyExists($userName)
-    {
-        $request = Request::createFromGlobals();
-        if ($request->server->get('REQUEST_METHOD') == 'GET') {
-            $user = new Users();
-            if ($user->isExitsUserName($userName)->count > 0) {
-                echo json_encode(['status' => 'true']);
-            } else {
-                echo json_encode(['status' => 'false']);
+    /**
+     * Using for check an user name exists
+     * @param null $userName
+     */
+    public function users($userName = null){
+        if ($this->request->server->get('REQUEST_METHOD') === 'GET' && $userName !== null) {
+            $users = new Users();
+            $user = $users->getByUserName($userName);
+            if(empty($user)){
+                new RestResponse([],404,'user not found');
+                return;
             }
+
+            new RestResponse([],200,'user exists');
+            return;
         }
     }
 
-    public function emailAlreadyExists()
-    {
-        $request = Request::createFromGlobals();
+    /**
+     * Use for check if an email exits
+     */
+    public function emails(){
+        if ($this->request->server->get('REQUEST_METHOD') === 'POST') {
+            $users = new Users();
+            $data = json_decode($this->request->getContent());
 
-        if ($request->server->get('REQUEST_METHOD') == 'POST') {
-            $user = new Users();
-            if ($user->isExitsEmail($request->request->filter('email'))->count > 0) {
-                echo json_encode(['status' => 'true']);
-            } else {
-                echo json_encode(['status' => 'false']);
+            if(!isset($data->email)){
+                new RestResponse([],409,'email key no exists');
+                return;
             }
+
+            $data = $users->getByEmail($data->email);
+            if(empty($data)){
+                new RestResponse([],404,'email not found');
+                return;
+            }
+
+            new RestResponse([],200,'email exists');
+            return;
         }
     }
 
