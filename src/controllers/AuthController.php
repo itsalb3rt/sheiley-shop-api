@@ -109,16 +109,21 @@ class AuthController extends Controller
 
     public function resetPassword()
     {
-        $request = Request::createFromGlobals();
-        if ($request->server->get('REQUEST_METHOD') === 'POST') {
-            $token = $request->request->filter('token');
+        if ($this->request->server->get('REQUEST_METHOD') === 'POST') {
+            $data = json_decode($this->request->getContent());
+
+            if(!isset($data->token) || !isset($data->password) || !isset($data->password_confirm)){
+                new RestResponse([],409,'Invalid json object');
+                return;
+            }
+
             $tokenista = new Tokenista('sheileyshop', ["lifetime" => 7200]);
             $accountRecovery = new AccountRecovery();
-            $accountData = $accountRecovery->getByToken($token);
+            $accountData = $accountRecovery->getByToken($data->token);
 
-            if ($tokenista->isValid($token) === true && $tokenista->isExpired($token) === false && !empty($accountData)) {
-                $password = $request->request->filter('password');
-                $confirmPassword = $request->request->filter('confirm_password');
+            if ($tokenista->isValid($data->token) === true && $tokenista->isExpired($data->token) === false && !empty($accountData)) {
+                $password = $data->password;
+                $confirmPassword = $data->password_confirm;
                 $user = new Users();
 
                 if ($this->password_match($password, $confirmPassword)) {
@@ -126,15 +131,15 @@ class AuthController extends Controller
                         'password' => $this->encrypt_password($password)
                     ]);
                     $accountRecovery->removeAccountRecoveryInformation($accountData->id_user);
-                    http_response_code(200);
-                    echo json_encode(['status' => 'success']);
+                    new RestResponse([],200,'password change');
+                    return;
                 } else {
-                    http_response_code(409);
-                    echo json_encode(['status' => 'error', 'message' => 'password not match']);
+                    new RestResponse([],409,'password not match');
+                    return;
                 }
             } else {
-                http_response_code(401);
-                echo json_encode(['status' => 'error', 'message' => 'the token is not valid']);
+                new RestResponse([],409,'Invalid token');
+                return;
             }
         }
     }
