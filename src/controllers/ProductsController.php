@@ -5,100 +5,105 @@
  * Date: 5/6/2019
  * Time: 2:15 PM
  */
+
 use App\models\Products\Products;
+use App\models\Users\Users;
+use App\plugins\RestResponse;
+use App\plugins\SecureApi;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductsController extends Controller
 {
 
+    private $request;
+    private $userToken;
+
     public function __construct()
     {
-        if(ENVIROMENT == 'dev'){
-            $origin = "http://localhost:8080";
-        }else{
-            $origin = "https://gibucket.a2hosted.com";
-        }
-        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-        header("Access-Control-Allow-Origin:$origin");
-        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
+        new SecureApi(true);
+        $this->request = Request::createFromGlobals();
+        $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
     }
 
-
-    public function list($idUser){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET'){
-            $products = new Products();
-            echo json_encode($products->products($idUser));
-        }
-    }
-
-    public function products(){
-         $request = Request::createFromGlobals();
-        switch ($request->server->get('REQUEST_METHOD')){
+    public function products($id = null)
+    {
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
+        switch ($this->request->server->get('REQUEST_METHOD')) {
             case 'GET':
+
+                if ($id === null) {
+                    $products = new Products();
+                    new RestResponse($products->getAll($user->id_user));
+                    return;
+                }
+
                 $products = new Products();
-                echo json_encode($products->products(null,$request->query->filter('idProduct')));
+                new RestResponse($products->getById($user->id_user, $id));
+                break;
+            case 'POST':
+                $this->add();
+                break;
+            case 'PATCH':
+                $this->update($id);
+                break;
+            case 'DELETE':
+                $this->delete($id);
                 break;
         }
     }
 
-    public function update(){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-            $product = new Products();
-            $data = json_decode($request->request->get('product'),true);
-            $product->update($request->request->filter('id_product'),$data);
-            echo json_encode([
-               'status'=>'success'
-            ]);
-        }
+    public function update($idProduct)
+    {
+        $products = new Products();
+        $product = json_decode($this->request->getContent(), true);
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
+
+        $products->update($idProduct, $product);
+        new RestResponse($products->getById($user->id_user,$idProduct), 200, 'product updated');
     }
 
-    public function add(){
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'POST'){
-            $newProduct = new Products();
-            //Front object
-            $product = json_decode($request->request->get('product'),true);
-            $result = null;
-            if($this->productReadyExitst($product['name'],$product['id_user'])){
-                $result = [
-                    'status'=>'exits',
-                    'data'=>[
-                        'name'=>$product['name']
-                    ]
-                ];
-            }else{
-                $insertId = $newProduct->add($product);
-                $result = [
-                    'status'=>'success',
-                    'data'=>[
-                        'id_product'=>$insertId
-                    ]
-                ];
+    private function add()
+    {
+        $products = new Products();
+        $product = json_decode($this->request->getContent(), true);
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
+        $result = null;
 
-            }
-            echo json_encode($result);
+        if ($this->productReadyExitst($product['name'], $user->id_user)) {
+            $result = [
+                'product name exits'
+            ];
+            new RestResponse($result, 409, '', $result);
+            return;
         }
+        $product['id_user'] = $user->id_user;
+        $insertId = $products->add($product);
+        $product = $products->getById($user->id_user,$insertId);
+        new RestResponse($product, 201,'product created');
+        return;
+
     }
 
-    public function delete($idProduct):void {
-         $request = Request::createFromGlobals();
-        if($request->server->get('REQUEST_METHOD') == 'GET'){
-            $product = new Products();
-            $product->delete($idProduct);
-            echo json_encode([
-               'status'=>'success'
-            ]);
-        }
-    }
-
-    private function productReadyExitst($name,$idUser):bool {
+    public function delete($idProduct): void
+    {
         $product = new Products();
-        $product = $product->getProductByName(strtoupper($name),$idUser);
-        if($product->count > 0){
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
+
+        $product->delete($idProduct,$user->id_user);
+        new RestResponse(null, 200, 'product deleted');
+    }
+
+    private function productReadyExitst($name, $idUser): bool
+    {
+        $product = new Products();
+        $product = $product->getProductByName(strtoupper($name), $idUser);
+        if ($product->count > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
