@@ -25,7 +25,10 @@ class UsersController extends Controller
         switch ($request->server->get('REQUEST_METHOD')) {
             case 'GET':
                 if($id !== null){
-                    new RestResponse($users->getById($id));
+                    $user = $users->getById($id);
+                    unset($user->password);
+                    unset($user->token);
+                    new RestResponse($user);
                     return;
                 }
                 break;
