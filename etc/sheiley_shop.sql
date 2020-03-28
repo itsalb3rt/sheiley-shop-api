@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 26-08-2019 a las 10:49:01
+-- Tiempo de generación: 27-03-2020 a las 21:58:39
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.2.11
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sheiley_shop`
 --
-CREATE DATABASE IF NOT EXISTS `sheiley_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `sheiley_shop`;
 
 -- --------------------------------------------------------
 
@@ -36,29 +34,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `categories`
---
-
-INSERT INTO `categories` (`id_category`, `name`, `id_user`) VALUES
-(1, 'SIN CATEGORIA', 1),
-(2, 'SIN CATEGORIA', 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `itbis`
---
-
-DROP TABLE IF EXISTS `itbis`;
-CREATE TABLE IF NOT EXISTS `itbis` (
-  `id_itbis` int(11) NOT NULL AUTO_INCREMENT,
-  `quantity` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  PRIMARY KEY (`id_itbis`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -72,15 +48,7 @@ CREATE TABLE IF NOT EXISTS `measurement_units` (
   `name` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   PRIMARY KEY (`id_unit_measurement`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `measurement_units`
---
-
-INSERT INTO `measurement_units` (`id_unit_measurement`, `name`, `id_user`) VALUES
-(1, 'UNIDAD', 1),
-(2, 'UNIDAD', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -109,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` double NOT NULL,
   `id_unit_measurement` int(11) NOT NULL,
   `id_category` int(11) NOT NULL,
-  `itbis` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `include_tax` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   `favorite` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -125,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `products` (
 DROP TABLE IF EXISTS `purchases`;
 CREATE TABLE IF NOT EXISTS `purchases` (
   `id_purchase` int(11) NOT NULL AUTO_INCREMENT,
-  `date` timestamp NOT NULL,
+  `create_at` timestamp NOT NULL,
   `id_user` int(11) NOT NULL,
   PRIMARY KEY (`id_purchase`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -143,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `purchases_details` (
   `product_name` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `unit_price` double NOT NULL,
   `quantity` int(11) NOT NULL,
-  `apply_itbis` int(1) NOT NULL,
+  `include_tax` int(1) NOT NULL,
   `category` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `measurement_unit` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_purchase_detail`)
@@ -160,8 +128,21 @@ CREATE TABLE IF NOT EXISTS `recovered_accounts` (
   `recovered_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
   `single_use_token` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expired_token_date` timestamp NOT NULL,
   PRIMARY KEY (`recovered_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `taxes`
+--
+
+DROP TABLE IF EXISTS `taxes`;
+CREATE TABLE IF NOT EXISTS `taxes` (
+  `id_tax` int(11) NOT NULL AUTO_INCREMENT,
+  `quantity` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  PRIMARY KEY (`id_tax`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -178,8 +159,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
