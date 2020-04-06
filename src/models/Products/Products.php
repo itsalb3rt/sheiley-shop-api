@@ -22,6 +22,18 @@ class Products extends Model
             ->getAll();
     }
 
+    public function getAllBrands($idUser)
+    {
+        return $this->db()
+            ->select('brand')
+            ->table('products')
+            ->groupBy('brand')
+            ->where('id_user', '=', $idUser)
+            ->where('brand','!=', 'NULL')
+            ->orderBy('brand','ASC')
+            ->getAll();
+    }
+
     public function getById($idUser, $idProduct)
     {
         return $this->db()
@@ -54,12 +66,12 @@ class Products extends Model
             ->delete();
     }
 
-    public function getProductByName($name, $idUser)
+    public function getProductByNameAndBrand($name, $brand, $idUser)
     {
         return $this->db()
             ->count('id_product', 'count')
             ->table('products')
-            ->where('name = ? AND id_user = ?', [$name, $idUser])
+            ->where('name = ? AND brand = ? AND id_user = ?', [$name, $brand, $idUser])
             ->get();
     }
 }
