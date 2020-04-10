@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 27-03-2020 a las 21:58:39
+-- Tiempo de generación: 10-04-2020 a las 00:03:44
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.2.11
 
@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `description` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   `favorite` tinyint(1) DEFAULT NULL,
+  `brand` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -114,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `purchases_details` (
   `include_tax` int(1) NOT NULL,
   `category` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `measurement_unit` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_purchase_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
