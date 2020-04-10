@@ -1,5 +1,5 @@
 FROM php:7.2-apache
-COPY . /var/www/html/ticket-system-api
+COPY . /var/www/html/sheyley-shop-api
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -14,5 +14,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html/ticket-system-api
+WORKDIR /var/www/html/sheyley-shop-api
 RUN composer install

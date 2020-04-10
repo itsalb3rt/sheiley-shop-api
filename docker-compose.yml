@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   db:
     image: mysql:5.7
@@ -13,8 +13,8 @@ services:
     ports:
       - ${MYSQL_EXPOSED_PORT}:3306
   sheiley-shop-api:
-    build: .
     image: php:7.2-apache
+    build: .
     depends_on:
       - db
     ports:
