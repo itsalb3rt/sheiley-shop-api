@@ -20,7 +20,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        new SecureApi(true);
+        new SecureApi();
         $this->request = Request::createFromGlobals();
         $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
     }
@@ -53,6 +53,24 @@ class ProductsController extends Controller
         }
     }
 
+    /**
+     * Return all brands of products by logged user
+     */
+    public function brands(){
+        $user = new Users();
+        $user = $user->getByToken($this->userToken);
+        if ($this->request->server->get('REQUEST_METHOD') === 'GET') {
+            $products = new Products();
+            $brands = $products->getAllBrands($user->id_user);
+            $result = [];
+            foreach ($brands as $key => $value){
+                $result[] = $value->brand;
+            }
+            new RestResponse($result);
+            return;
+        }
+    }
+
     public function update($idProduct)
     {
         $products = new Products();
@@ -72,7 +90,7 @@ class ProductsController extends Controller
         $user = $user->getByToken($this->userToken);
         $result = null;
 
-        if ($this->productReadyExitst($product['name'], $user->id_user)) {
+        if ($this->productReadyExitst($product['name'],$product['brand'], $user->id_user)) {
             $result = [
                 'product name exits'
             ];
@@ -97,10 +115,10 @@ class ProductsController extends Controller
         new RestResponse(null, 200, 'product deleted');
     }
 
-    private function productReadyExitst($name, $idUser): bool
+    private function productReadyExitst($name,$brand, $idUser): bool
     {
         $product = new Products();
-        $product = $product->getProductByName(strtoupper($name), $idUser);
+        $product = $product->getProductByNameAndBrand(strtoupper($name),strtoupper($brand), $idUser);
         if ($product->count > 0) {
             return true;
         } else {
