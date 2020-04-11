@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 10-04-2020 a las 00:03:44
+-- Tiempo de generación: 10-04-2020 a las 16:16:13
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.2.11
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sheiley_shop`
 --
+CREATE DATABASE IF NOT EXISTS `sheiley_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `sheiley_shop`;
 
 -- --------------------------------------------------------
 

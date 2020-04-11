@@ -86,7 +86,7 @@ class AuthController extends Controller
 
             $idUser = $users->create($user_data);
             $miscellany = new Miscellany();
-            $miscellany->createInitialItbis([
+            $miscellany->createInitialTaxes([
                 'quantity' => 1,
                 'id_user' => $idUser
             ]);
