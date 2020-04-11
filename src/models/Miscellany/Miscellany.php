@@ -29,9 +29,9 @@ class Miscellany extends Model
             ->insert($data);
     }
 
-    public function createInitialItbis($data){
+    public function createInitialTaxes($data){
         $this->db()
-            ->table('itbis')
+            ->table('taxes')
             ->insert($data);
     }
 

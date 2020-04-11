@@ -19,11 +19,11 @@ class Analysis extends Model
 (
 SELECT
     SUM(
-        ((purchases_details.unit_price * purchases_details.quantity) * (itbis.quantity/100)) + (purchases_details.unit_price * purchases_details.quantity)
+        ((purchases_details.unit_price * purchases_details.quantity) * (taxes.quantity/100)) + (purchases_details.unit_price * purchases_details.quantity)
     ) AS total
 FROM
     purchases_details
-    INNER JOIN itbis ON itbis.id_user = ?
+    INNER JOIN taxes ON taxes.id_user = ?
 WHERE
     purchases_details.id_purchase = purchases.id_purchase
 ) AS total
