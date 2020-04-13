@@ -34,6 +34,15 @@ port=""
 
 In the `system/webroot/` directory you will find a file named `FrontController.php` inside this you must modify the constant `ENVIROMENT` and put the value `pro`.
 
+## Docker
+
+The `API` is ready for using with docker, copy the `.env.bak` file and rename it for `.env` and set your configuration.
+
+```bash
+$ docker-compose up -d
+```
+
+:warning: Is important if you use docker, go to `root/system/config/config.php.ini` and change the `host` for `sheiley-shop-db`.
 
 [Go back to main documentation](https://github.com/itsalb3rt/sheiley_shop_app)
 
