@@ -1,78 +1,79 @@
 <?php
+
 use Ligne\ErrorHandler;
 
 /**
- * Esta clase controla inclusive si en la url se ha ingresado un controlador
- * inexistente o un metodo del controlador que no existe con la siguiente jerarquía:
+ * This class controls even if a driver has been entered in the url
+ * nonexistent or a controller method that does not exist with the following hierarchy:
  *
- * http://host/controller/action/[parameter]
- *                  ^        ^
- *            1ro verifica   2da verifica
+ * http: // host / controller / action / [parameter]
+ *                     ^          ^
+ *               1st verify    2nd verify
  *
- * Hasta que la primera condicion de este no se da, no continua, siendo esta una manera
- * se asegurarse de que el controlador este correcrto para poder verificar
- * que el metodo sea parte de ese controlador.
+ * Until the first condition of this is not given, it does not continue, this being a way
+ * make sure the controller is correct to verify
+ * that the method be part of that controller.
  *
- * El enrutador toma la url capturada por request.php y explota la url en 3
- * partes diferentes en el carácter "/":
+ * The router takes the url captured by request.php and exploits the url in 3
+ * different parts in the "/" character:
  *
  **/
+
 class Router
 {
     /**
-     * Las variables @projectDir y @offSet se incluyeron en la actualizacion del 20/02/2019 para
-     * que el framework pueda estar en cualquier directorio o subdirectorio del servidor
-     *
-     * Esto analiza en que nivel de la URLI estan el contorlador, la accion y los parametros
+     * Load the controller, action and params user request from a URL.
      *
      * @param $url
      * @param $request
      */
-    static public function parse(string $url,object $request):void{
-        $url = strtok(trim($url),'?');
-        $explode_url = explode('/', $url);
+    static public function parse(string $url, object $request): void
+    {
+        $url = strtok(trim($url), '?');
 
-        $projectDir = explode('/',__ROOT__DIR__);
-        $offSet = count($projectDir)-3;
+        $controllerName = self::subtractControllerName($url);
+        $actionNAme = self::subtractActionName($url);
+        $params = self::subtractParams($url);
 
-        $explode_url = array_slice($explode_url, $offSet);
-        if ($url == '/' . self::rootDir() . '/' || strlen($explode_url[0]) == 0 )
+        if ($url == '/' . self::rootDir() . '/' || $controllerName === null)
             self::loadIndex($request);
-        elseif(self::isArrayUrlValid($explode_url))
-            self::routeConstruct($request,$explode_url);
+        elseif ($controllerName !== null && $actionNAme !== null)
+            self::routeConstruct($request, $controllerName, $actionNAme, $params);
         else
-            self::showNonexistentController($explode_url[0]);
+            self::showNonexistentController($controllerName);
     }
 
     /**
-     * Constuye la url si esta es valida, digase que exista el controlador
-     * y su accion
-     * @param $request
-     * @param $explode_url
+     * Construct the route base on URL
+     *
+     * @param object $request
+     * @param string $controllerName
+     * @param string $actionName
+     * @param array $params
      */
-    static private function routeConstruct(object $request,array $explode_url):void{
-        $request->controller = $explode_url[0];
-        $request->action = $explode_url[1];
-        $request->params = array_slice($explode_url, 2);
+    static private function routeConstruct(object $request, string $controllerName, string $actionName, array $params): void
+    {
+        $request->controller = $controllerName;
+        $request->action = $actionName;
+        $request->params = $params;
     }
+
     /**
-     * Esta es la vista por defecto que cera el usaurio al ingresar al
-     * ROOT del dominio
+     * The default root project controller
      *
      * http://localhost/project/
      *
-     * Cargara la pagina principal del project, por ejemplo.
-     *
      * @param $request
      */
-    static public function loadIndex(object $request):void{
+    static public function loadIndex(object $request): void
+    {
         $request->controller = "default";
         $request->action = "index";
         $request->params = [];
     }
+
     /**
-     * Verifica que la $url sea un arreglo de 2 o mas posiciones para obtener
-     * una url valida
+     * Check if the url have an controller and action
      * eje: http://localhost/ligne_php/Controller/Action/[parameter]
      *                                  ^          ^
      *                                $url[0]     $url[1]
@@ -80,38 +81,41 @@ class Router
      *
      * @return bool
      */
-    static private function isArrayUrlValid(array $url):bool {
+    static private function isArrayUrlValid(array $url): bool
+    {
         if (count($url) > 1)
             return true;
         else
             return false;
     }
+
     /**
-     * Retorna el nombre de la carpeta base del proyecto
-     * esto es relativo ya que la carpeta donde esta el framework podria
-     * llamarse de cualquier manera y con esto se obtiene este nombre
+     * Return main project dir for load controllers class files
      *
      * @return string
      */
-    static private function rootDir():string {
-        $root_dir = $_SERVER['REQUEST_URI'];
-        $root_dir = explode('/',$root_dir);
-        return $root_dir[1];
-    }
-    /**
-     * Muestra una pantalla cuando en la ruta se ha insertado un
-     * controller que no existe
-     */
-    static public function showNonexistentController(string $controller_name = null):void {
-        $erroHandler = new ErrorHandler(ENVIROMENT);
-        $erroHandler->showDevMessages("El controlador no existe",
-            "Debe verificar la ruta que ha insertado, en realidad tiene un controlador con el nombre <span class='special_name_element'>$controller_name</span>",$_SERVER['REQUEST_URI']);
+    static private function rootDir(): string
+    {
+        $root_dir = str_replace('/system/core', '', __DIR__);
+        $root_dir = explode('/', $root_dir);
+        return $root_dir[count($root_dir) - 1];
     }
 
     /**
-     * Muestra al usuario que la accion requerida esta vacia, no existe o es incorrecta
+     * When the user insert a invalid controller this show a 500 HTTP Status error
      */
-    static public function showInvalidAction():void{
+    static public function showNonexistentController(string $controller_name = null): void
+    {
+        $erroHandler = new ErrorHandler(ENVIROMENT);
+        $erroHandler->showDevMessages("El controlador no existe",
+            "Debe verificar la ruta que ha insertado, en realidad tiene un controlador con el nombre <span class='special_name_element'>$controller_name</span>", $_SERVER['REQUEST_URI']);
+    }
+
+    /**
+     * Show HTTP 500 Status code and error if the actions not valid
+     */
+    static public function showInvalidAction(): void
+    {
         $erroHandler = new ErrorHandler(ENVIROMENT);
         $erroHandler->showDevMessages("Acción  inexistente para la url",
             "Puede que este intentado realizar una acción que no exista, por ejemplo, para un controlador foo que tenga una acción bar la ruta seria http://dominio/foo/bar",
@@ -119,12 +123,78 @@ class Router
     }
 
     /**
-     * Muestra al usuario que el metodo del controlador no existe
+     * Show HTTP 500 Status code and error if the actions not exists
      * @param $method String
      */
-    static public function showActionNoExists(string $method):void{
+    static public function showActionNoExists(string $method): void
+    {
         $erroHandler = new ErrorHandler(ENVIROMENT);
         $erroHandler->showDevMessages("La acción ' " . $method . " ' no existe",
             "La acción solicitada al parecer no existe en el controlador");
+    }
+
+    /**
+     * @param $url
+     * @return mixed
+     *
+     * Subtract the controller name of the url using a root dir for
+     * get relative url
+     */
+    static public function subtractControllerName($url)
+    {
+        $explodeUrl = explode('/', $url);
+        $explodeRootDir = explode('/', __ROOT__DIR__);
+
+        $explodeUrl = self::unsertKeysFromSourceArray($explodeUrl, $explodeRootDir);
+
+        $explodeUrl = array_values($explodeUrl);
+        return isset($explodeUrl[0]) ? $explodeUrl[0] : null;
+    }
+
+    static public function subtractActionName($url)
+    {
+        $explodeUrl = explode('/', $url);
+        $explodeRootDir = explode('/', __ROOT__DIR__);
+
+        $explodeUrl = self::unsertKeysFromSourceArray($explodeUrl, $explodeRootDir);
+
+        $explodeUrl = array_values($explodeUrl);
+        return isset($explodeUrl[1]) ? $explodeUrl[1] : null;
+    }
+
+    static public function subtractParams($url): array
+    {
+        $explodeUrl = explode('/', $url);
+        $explodeRootDir = explode('/', __ROOT__DIR__);
+
+        $params = self::unsertKeysFromSourceArray($explodeUrl, $explodeRootDir);
+
+        $params = array_values($explodeUrl);
+        //Exclude the controller and action from url
+        for ($i = 0; $i <= 3; $i++)
+            unset($params[$i]);
+        $params = array_values($params);
+        return (empty($params)) ? [] : $params;
+    }
+
+    /**
+     * @param array $source
+     * @param array $target
+     * @return array
+     *
+     * Use for get the controller, action and paras from url
+     * this recibe a $source (explode URL user request) and $target (explode root dir project)
+     *
+     * Unsert project "values" from the $url for determinate if the user specific the
+     * controller, action and params
+     */
+    static private function unsertKeysFromSourceArray(array $source, array $target)
+    {
+        foreach ($source as $key => $value) {
+            if (in_array($value, $target)) {
+                unset($source[$key]);
+            }
+        }
+        return $source;
     }
 }
