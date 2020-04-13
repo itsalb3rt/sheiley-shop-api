@@ -6,6 +6,8 @@
  * Time: 4:57 PM
  */
 
+use App\models\Categories\Categories;
+use App\models\MeasurementUnits\MeasurementUnits;
 use App\models\Users\Users;
 use App\models\Miscellany\Miscellany;
 use App\plugins\RestResponse;
@@ -91,12 +93,14 @@ class AuthController extends Controller
                 'id_user' => $idUser
             ]);
 
-            $miscellany->addMeasurementUnits([
+            $measurementsUnits = new MeasurementUnits();
+            $measurementsUnits->create([
                 'name' => 'UNIDAD',
                 'id_user' => $idUser
             ]);
 
-            $miscellany->addCategory([
+            $categories = new Categories();
+            $categories->create([
                 'name' => 'SIN CATEGORIA',
                 'id_user' => $idUser
             ]);
