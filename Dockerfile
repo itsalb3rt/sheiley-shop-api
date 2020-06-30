@@ -1,5 +1,5 @@
 FROM php:7.2-apache
-COPY . /var/www/html/sheyley-shop-api
+COPY . /var/www/html/sheiley-shop-api
 
 RUN apt-get update && \
     apt-get upgrade -y && \
