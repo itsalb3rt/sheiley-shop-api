@@ -16,5 +16,5 @@ RUN a2enmod rewrite
 
 EXPOSE 80
 
-WORKDIR /var/www/html/sheyley-shop-api
+WORKDIR /var/www/html/sheiley-shop-api
 RUN composer install
