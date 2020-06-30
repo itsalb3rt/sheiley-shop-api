@@ -28,7 +28,7 @@ if(version_compare(PHP_VERSION, '7.2', '>=') == false ){
  * Esta constante define el protocolo utilizado en el momento, es utilizado principlamente para
  * agregar los assets y el redireccionamiento con el metodo del Controller principal
  **/
-define('PROTOCOL','http');
+define('PROTOCOL','https');
 /**
  * Esta constante se define para determinar en que entorno se encuentra la aplicacion usando
  * el framework, esto para evitar mostrar errores no deseados a los usuarios cuando
