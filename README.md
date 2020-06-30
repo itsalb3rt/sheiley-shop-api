@@ -44,6 +44,6 @@ $ docker-compose up -d
 
 :warning: Is important if you use docker, go to `root/system/config/config.php.ini` and change the `host` for `sheiley-shop-db`.
 
+:warning: If you do not use `Traefik`, remove the `labels` and the `networks` section of the `docker-compose.yml`
+
 [Go back to main documentation](https://github.com/itsalb3rt/sheiley_shop_app)
-
-
