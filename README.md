@@ -7,7 +7,7 @@ $ git clone https://github.com/itsalb3rt/sheiley-shop-api.git
 ```
 
 ```bash
-$ composer require itsalb3rt/sheiley-shop-api
+$ make install-dependencies
 ```
 
 ### Database
