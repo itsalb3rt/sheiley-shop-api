@@ -1,0 +1,22 @@
+version: '3'
+services:
+  sheiley-shop-api:
+    image: php:7.2-apache
+    build: 
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - ${API_EXPOSED_PORT}:80
+    labels: 
+      - "traefik.http.routers.sheiley-shop-api.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.sheiley-shop-api.entrypoints=websecure"
+      - "traefik.http.routers.sheiley-shop-api.tls.certresolver=myresolver"
+    volumes:
+      - .:/var/www/html/sheiley-shop-api
+    networks:
+      - traefik-network
+
+networks:
+  traefik-network:
+    external:
+      name: traefik_proxynet
