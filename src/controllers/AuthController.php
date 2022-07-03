@@ -37,8 +37,13 @@ class AuthController extends Controller
             $requestUser = json_decode($this->request->getContent());
             $users = new Users();
 
-            $userCredentials = $users->getByUserName(strtolower($requestUser->user_name));
-
+            if(filter_var($requestUser->user_name, FILTER_VALIDATE_EMAIL)) {
+                $userCredentials = $users->getByEmailForAuth(strtolower($requestUser->user_name));
+            }
+            else {
+                $userCredentials = $users->getByUserName(strtolower($requestUser->user_name));
+            }
+            
             if (empty($userCredentials) === false
                 && password_verify($requestUser->password, $userCredentials->password)) {
                 $token = new Tokenista('sheiley');
