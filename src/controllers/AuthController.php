@@ -79,7 +79,7 @@ class AuthController extends Controller
                 $lastname = array_pop($parts);
                 $firstname = implode(" ", $parts);
             }else{
-                $firstname = $name;
+                $firstname = $newUser->fullname;
                 $lastname = " ";
             }
 
