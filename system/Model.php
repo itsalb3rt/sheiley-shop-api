@@ -11,24 +11,20 @@ use Buki\Pdox;
 class Model
 {
     private $bdd = null;
-    private $credentials;
     private $config;
 
     public function db() {
         if(is_null($this->bdd)) {
-            // Leer credenciales desde el  archivo ini
-            $this->credentials = parse_ini_file(__ROOT__DIR__ . "system/config/config.php.ini");
-
             $this->config = [
-                'host'		=> $this->credentials["host"],
-                'driver'	=> $this->credentials["driver"],
-                'database'	=> $this->credentials["dbname"],
-                'username'	=> $this->credentials["user"],
-                'password'	=> $this->credentials["pass"],
-                'charset'	=> $this->credentials["charset"],
-                'collation'	=> $this->credentials["collation"],
-                'prefix'	=> $this->credentials["prefix"],
-                'port'	=> $this->credentials["port"]
+                'host'		=> $_ENV['APP_DATABASE_HOST'],
+                'driver'	=> "mysql",
+                'database'	=> $_ENV['APP_DATABASE_NAME'],
+                'username'	=> $_ENV['APP_DATABASE_USER'],
+                'password'	=> $_ENV['APP_DATABASE_PASSWORD'],
+                'charset'	=> "utf8",
+                'collation'	=> "utf8mb4_unicode_ci",
+                'prefix'	=> "",
+                'port'	=> $_ENV['APP_DATABASE_PORT']
             ];
             /**
              * Pdox es un Query Builder usado para facilitar la manera en que se

@@ -10,32 +10,16 @@ $ git clone https://github.com/itsalb3rt/sheiley-shop-api.git
 $ make install-dependencies
 ```
 
-### Database
-
-Inside the *root* directory of the REST API enter `etc/sheiley_shop.sql` this file contains all the script from the database.
-
-After executing the script in the Mysql database, it remains to enter the directory `config/config.php.ini` and set user database, username and password.
-
-```ini
-<?php return; ?>
-; Database config
-host=localhost
-user=root
-pass=toor
-dbname=sheiley_shop
-driver=mysql
-charset=utf8
-collation=utf8mb4_unicode_ci
-prefix=""
-port=""
-```
-
 ### Backend production
 
-In the `system/webroot/` directory you will find a file named `FrontController.php` inside this you must modify the constant `ENVIROMENT` and put the value `pro`.
+In the `env` file you have a `API_ENVIRONMENT` variable that can be set to `production` or `development`.
+
+```bash
+#make serve
+API_ENVIRONMENT=pro 
+```
 
 ## Docker
-
 
 The `API` is ready for using with docker, copy the `.env.bak` file and rename it for `.env` and set your configuration.
 
@@ -45,8 +29,6 @@ docker-compose up -d
 # Development
 docker-compose -f docker-compose-dev.yml up -d
 ```
-
-:warning: Is important if you use docker, go to `root/system/config/config.php.ini` and change the `host` for `sheiley-shop-db`.
 
 :warning: If you do not use `Traefik`, remove the `labels` and the `networks` section of the `docker-compose.yml`
 

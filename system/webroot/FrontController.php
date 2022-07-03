@@ -34,7 +34,6 @@ define('PROTOCOL','https');
  * el framework, esto para evitar mostrar errores no deseados a los usuarios cuando
  * el sistema esta en produccion
  **/
-define('ENVIROMENT','dev');
 
 /**
  * El el nucleo centrar el framework, carga clases escenciales
@@ -48,8 +47,11 @@ require_once(__ROOT__DIR__ . 'system/core/Dispatcher.php');
 require_once(__ROOT__DIR__ . 'system/Assets.php');
 
 use Ligne\ErrorHandler;
+// Load the env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "../../../");
+$dotenv->load();
 
-new ErrorHandler(ENVIROMENT);
+new ErrorHandler($_ENV["API_ENVIRONMENT"]);
 
 $dispatch = new Dispatcher();
 $dispatch->dispatch();
