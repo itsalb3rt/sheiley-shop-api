@@ -35,9 +35,22 @@ class UsersController extends Controller
             case 'PATCH':
                 $user = json_decode($this->request->getContent());
 
+                $firstname = " ";
+                $lastname = " ";
+
+                $parts = explode(" ", $user->fullname);
+
+                if(count($parts) > 1) {
+                    $lastname = array_pop($parts);
+                    $firstname = implode(" ", $parts);
+                }else{
+                    $firstname = $user->fullname;
+                    $lastname = " ";
+                }
+
                 $updateData = [
-                    "first_name"=>$user->firstName,
-                    "last_name"=>$user->lastName,
+                    "first_name"=>$firstname,
+                    "last_name"=>$lastname,
                     "email"=>$user->email
                 ];
                 
