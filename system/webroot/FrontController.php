@@ -51,5 +51,9 @@ use Ligne\ErrorHandler;
 
 new ErrorHandler(ENVIROMENT);
 
+// Load the env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "../../../");
+$dotenv->load();
+
 $dispatch = new Dispatcher();
 $dispatch->dispatch();
