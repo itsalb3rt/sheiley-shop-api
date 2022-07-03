@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.4-apache
 COPY . /var/www/html/sheiley-shop-api
 
 RUN apt-get update && \
@@ -10,7 +10,9 @@ RUN apt-get update && \
 RUN docker-php-ext-install pdo_mysql
 
 #Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl https://getcomposer.org/download/1.10.26/composer.phar --output composer.phar
+RUN chmod a+x composer.phar
+RUN mv composer.phar /usr/local/bin/composer
 
 RUN a2enmod rewrite
 
