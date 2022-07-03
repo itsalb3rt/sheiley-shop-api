@@ -19,9 +19,7 @@ In the `env` file you have a `API_ENVIRONMENT` variable that can be set to `prod
 API_ENVIRONMENT=pro 
 ```
 
-
 ## Docker
-
 
 The `API` is ready for using with docker, copy the `.env.bak` file and rename it for `.env` and set your configuration.
 
@@ -31,8 +29,6 @@ docker-compose up -d
 # Development
 docker-compose -f docker-compose-dev.yml up -d
 ```
-
-:warning: Is important if you use docker, go to `root/system/config/config.php.ini` and change the `host` for `sheiley-shop-db`.
 
 :warning: If you do not use `Traefik`, remove the `labels` and the `networks` section of the `docker-compose.yml`
 
