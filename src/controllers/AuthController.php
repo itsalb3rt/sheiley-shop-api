@@ -64,19 +64,33 @@ class AuthController extends Controller
                 return;
             }
 
+            $firstname = " ";
+            $lastname = " ";
+            $username = strtolower(strstr($newUser->email, '@', true));
+
+            $parts = explode(" ", $newUser->fullname);
+
+            if(count($parts) > 1) {
+                $lastname = array_pop($parts);
+                $firstname = implode(" ", $parts);
+            }else{
+                $firstname = $name;
+                $lastname = " ";
+            }
+
             $token = new Tokenista('sheiley');
             $user_data = [
-                'first_name' => $newUser->first_name,
-                'last_name' => $newUser->last_name,
-                'user_name' => strtolower($newUser->user_name),
+                'first_name' => $firstname,
+                'last_name' => $lastname,
+                'user_name' => $username,
                 'password' => $this->encrypt_password($newUser->password),
-                'email' => $newUser->email,
+                'email' => strtolower($newUser->email),
                 'token' => $token->generate()
             ];
 
             $users = new Users();
 
-            if ($users->isExitsUserName($newUser->user_name)->count > 0) {
+            if ($users->isExitsUserName($username)->count > 0) {
                 new RestResponse([], 409, 'user exists', ['user exists']);
                 return;
             }
