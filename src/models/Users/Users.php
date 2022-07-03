@@ -46,6 +46,13 @@ class Users extends Model
             ->get();
     }
 
+    public function getByEmailForAuth($email){
+        return $this->db()
+            ->table('users')
+            ->where('email','=',$email)
+            ->get();
+    }
+
     public function getById($id){
         return $this->db()
             ->table('users')

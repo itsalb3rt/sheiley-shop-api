@@ -7,7 +7,7 @@ $ git clone https://github.com/itsalb3rt/sheiley-shop-api.git
 ```
 
 ```bash
-$ composer require itsalb3rt/sheiley-shop-api
+$ make install-dependencies
 ```
 
 ### Database
@@ -36,10 +36,14 @@ In the `system/webroot/` directory you will find a file named `FrontController.p
 
 ## Docker
 
+
 The `API` is ready for using with docker, copy the `.env.bak` file and rename it for `.env` and set your configuration.
 
 ```bash
-$ docker-compose up -d
+# Production
+docker-compose up -d
+# Development
+docker-compose -f docker-compose-dev.yml up -d
 ```
 
 :warning: Is important if you use docker, go to `root/system/config/config.php.ini` and change the `host` for `sheiley-shop-db`.
