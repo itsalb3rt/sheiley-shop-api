@@ -15,7 +15,8 @@
         "ligne/error-handler": "^1.0",
         "ligne/session": "^1.2",
         "ingenerator/tokenista": "^1.2",
-        "phpmailer/phpmailer": "^6.1"
+        "phpmailer/phpmailer": "^6.1",
+        "vlucas/phpdotenv": "^5.4"
     },
     "autoload": {
         "psr-4": {
