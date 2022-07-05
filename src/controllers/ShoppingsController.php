@@ -113,7 +113,7 @@ class ShoppingsController extends Controller
                 'category' => $product->categoryName,
                 'measurement_unit' => $product->measurementUnitName,
                 'brand'=>$product->brand,
-                'product_id'=>$product->id_product
+                'id_product'=>$product->id_product
             ];
             $purchase->createDetailPurchase($data);
         }
