@@ -42,6 +42,14 @@ class Products extends Model
             ->get();
     }
 
+    public function getPurchases($idProduct)
+    {
+        return $this->db()
+            ->table('purchases_details')
+            ->where('id_product = ?', [$idProduct])
+            ->getAll();
+    }
+
     public function add($data)
     {
         $this->db()
