@@ -39,6 +39,14 @@ class ProductsController extends Controller
                 }
 
                 $products = new Products();
+
+                if ($this->request->query->get('include_purchases')) {
+                    $productResult = $products->getById($user->id_user, $id);
+                    $productResult->{"purchases"} = $products->getPurchases($id);
+                    new RestResponse($productResult);
+                    return;
+                }
+
                 new RestResponse($products->getById($user->id_user, $id));
                 break;
             case 'POST':

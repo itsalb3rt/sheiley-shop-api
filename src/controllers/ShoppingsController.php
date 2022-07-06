@@ -112,7 +112,8 @@ class ShoppingsController extends Controller
                 'include_tax' => $product->include_tax,
                 'category' => $product->categoryName,
                 'measurement_unit' => $product->measurementUnitName,
-                'brand'=>$product->brand
+                'brand'=>$product->brand,
+                'id_product'=>$product->id_product
             ];
             $purchase->createDetailPurchase($data);
         }

@@ -42,6 +42,17 @@ class Products extends Model
             ->get();
     }
 
+    public function getPurchases($idProduct)
+    {
+        return $this->db()
+            ->select('names_establishments.name as name_establishment, product_name, unit_price, quantity, include_tax, category, measurement_unit, brand, create_at')
+            ->table('purchases_details')
+            ->join('purchases', 'purchases.id_purchase = purchases_details.id_purchase')
+            ->join('names_establishments', 'names_establishments.id_purchase = purchases.id_purchase')
+            ->where('id_product = ?', [$idProduct])
+            ->getAll();
+    }
+
     public function add($data)
     {
         $this->db()

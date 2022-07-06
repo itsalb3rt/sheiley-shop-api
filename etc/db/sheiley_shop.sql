@@ -118,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `purchases_details` (
   `category` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `measurement_unit` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
   `brand` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_id` int(11) NULL,
   PRIMARY KEY (`id_purchase_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
