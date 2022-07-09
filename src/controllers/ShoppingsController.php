@@ -22,16 +22,15 @@ class ShoppingsController extends Controller
 
     public function __construct()
     {
-        new SecureApi();
         $this->request = Request::createFromGlobals();
-        $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
+        new SecureApi($this->request);
     }
 
 
     public function shoppings($id = null)
     {
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
         $shopping = new Shoppings();
 
         switch ($this->request->server->get('REQUEST_METHOD')) {
