@@ -158,7 +158,7 @@ class AuthController extends Controller
             $accountRecovery = new AccountRecovery();
             $accountData = $accountRecovery->getByToken($data->token);
 
-            if ($tokenista->validate($data->token) === true && !empty($accountData)) {
+            if ($tokenista->isValid($data->token) === true && !empty($accountData)) {
                 $password = $data->password;
                 $confirmPassword = $data->password_confirm;
                 $user = new Users();
@@ -168,7 +168,17 @@ class AuthController extends Controller
                         'password' => $this->encrypt_password($password)
                     ]);
                     $accountRecovery->removeAccountRecoveryInformation($accountData->id_user);
-                    new RestResponse([],200,'password change');
+
+                    $newUser = $user->getById($accountData->id_user);
+                    $payload = [
+                            "id_user" => $newUser->id_user,
+                            "first_name" => $newUser->first_name,
+                            "last_name" => $newUser->last_name,
+                            "email" => $newUser->email,
+                        ];
+
+                    $jwt = JWT::encode($payload, $_ENV["JWT_SECRET"], 'HS256');
+                    new RestResponse($jwt, 201);
                     return;
                 } else {
                     new RestResponse([],409,'password not match');
@@ -195,8 +205,7 @@ class AuthController extends Controller
             $user = new Users();
 
             if ($user->isExitsEmail($email)->count > 0) {
-                $token = 'sheileyshop';
-                $tokenista = new Tokenista($token, ["lifetime" => 7200]);
+                $tokenista = new Tokenista($_ENV["JWT_SECRET"], ["lifetime" => 7200]);
                 $token = $tokenista->generate();
                 $userData = $user->getByEmail($email);
                 $accountRecovery = new AccountRecovery();
@@ -210,8 +219,7 @@ class AuthController extends Controller
                 new RestResponse([],200,'email send');
                 return;
             } else {
-                new RestResponse([],409,'email no register',['email no register']);
-                return;
+                new RestResponse([], 200, 'email send');
             }
         }
     }
