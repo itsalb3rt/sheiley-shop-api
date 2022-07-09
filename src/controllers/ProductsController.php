@@ -20,15 +20,14 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        new SecureApi();
         $this->request = Request::createFromGlobals();
-        $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
+        new SecureApi($this->request);
     }
 
     public function products($id = null)
     {
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
         switch ($this->request->server->get('REQUEST_METHOD')) {
             case 'GET':
 
@@ -66,7 +65,7 @@ class ProductsController extends Controller
      */
     public function brands(){
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
         if ($this->request->server->get('REQUEST_METHOD') === 'GET') {
             $products = new Products();
             $brands = $products->getAllBrands($user->id_user);
@@ -84,7 +83,7 @@ class ProductsController extends Controller
         $products = new Products();
         $product = json_decode($this->request->getContent(), true);
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
 
         $products->update($idProduct, $product);
         new RestResponse($products->getById($user->id_user,$idProduct), 200, 'product updated');
@@ -95,7 +94,7 @@ class ProductsController extends Controller
         $products = new Products();
         $product = json_decode($this->request->getContent(), true);
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
         $result = null;
 
         if ($this->productReadyExitst($product['name'],$product['brand'], $user->id_user)) {
@@ -117,7 +116,7 @@ class ProductsController extends Controller
     {
         $product = new Products();
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
 
         $product->delete($idProduct,$user->id_user);
         new RestResponse(null, 200, 'product deleted');

@@ -12,9 +12,8 @@ class UsersController extends Controller
 
     public function __construct()
     {
-        new SecureApi();
         $this->request = Request::createFromGlobals();
-        $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
+        new SecureApi($this->request);
     }
 
     public function users($id = null)

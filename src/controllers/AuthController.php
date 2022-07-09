@@ -16,6 +16,7 @@ use Ingenerator\Tokenista;
 use App\plugins\AccountRecoveryEmailSend;
 use App\models\AccountRecovery\AccountRecovery;
 use App\plugins\SecureApi;
+use Firebase\JWT\JWT;
 
 class AuthController extends Controller
 {
@@ -24,8 +25,8 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        new SecureApi(true);
         $this->request = Request::createFromGlobals();
+        new SecureApi($this->request, true);
     }
 
 
@@ -35,22 +36,28 @@ class AuthController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $requestUser = json_decode($this->request->getContent());
-            $users = new Users();
+            $user = new Users();
 
             if(filter_var($requestUser->user_name, FILTER_VALIDATE_EMAIL)) {
-                $userCredentials = $users->getByEmailForAuth(strtolower($requestUser->user_name));
+                $userCredentials = $user->getByEmailForAuth(strtolower($requestUser->user_name));
             }
             else {
-                $userCredentials = $users->getByUserName(strtolower($requestUser->user_name));
+                $userCredentials = $user->getByUserName(strtolower($requestUser->user_name));
             }
             
             if (empty($userCredentials) === false
                 && password_verify($requestUser->password, $userCredentials->password)) {
-                $token = new Tokenista('sheiley');
-                $users->update($userCredentials->id_user, ['token' => $token->generate()]);
-                $users = $users->getById($userCredentials->id_user);
-                unset($users->password);
-                new RestResponse($users, 200, 'user logged');
+                $user = $user->getById($userCredentials->id_user);
+                
+                $payload = [
+                    "id_user" => $user->id_user,
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "email" => $user->email,
+                ];
+
+                $jwt = JWT::encode($payload, $_ENV["JWT_SECRET"], 'HS256');
+                new RestResponse($jwt, 200, 'user logged');
                 return;
             } else {
                 new RestResponse([], 401, 'wrong credentials', ['wrong credentials']);
@@ -83,14 +90,12 @@ class AuthController extends Controller
                 $lastname = " ";
             }
 
-            $token = new Tokenista('sheiley');
             $user_data = [
                 'first_name' => $firstname,
                 'last_name' => $lastname,
                 'user_name' => $username,
                 'password' => $this->encrypt_password($newUser->password),
                 'email' => strtolower($newUser->email),
-                'token' => $token->generate()
             ];
 
             $users = new Users();
@@ -125,7 +130,16 @@ class AuthController extends Controller
             ]);
             $newUser = $users->getById($idUser);
             unset($newUser->password);
-            new RestResponse($newUser, 201);
+
+            $payload = [
+                "id_user" => $newUser->id_user,
+                "first_name" => $newUser->first_name,
+                "last_name" => $newUser->last_name,
+                "email" => $newUser->email,
+            ];
+
+            $jwt = JWT::encode($payload, $_ENV["JWT_SECRET"], 'HS256');
+            new RestResponse($jwt, 201);
             return;
         }
     }
@@ -140,11 +154,11 @@ class AuthController extends Controller
                 return;
             }
 
-            $tokenista = new Tokenista('sheileyshop', ["lifetime" => 7200]);
+            $tokenista = new Tokenista($_ENV["JWT_SECRET"], ["lifetime" => 7200]);
             $accountRecovery = new AccountRecovery();
             $accountData = $accountRecovery->getByToken($data->token);
 
-            if ($tokenista->isValid($data->token) === true && $tokenista->isExpired($data->token) === false && !empty($accountData)) {
+            if ($tokenista->validate($data->token) === true && !empty($accountData)) {
                 $password = $data->password;
                 $confirmPassword = $data->password_confirm;
                 $user = new Users();

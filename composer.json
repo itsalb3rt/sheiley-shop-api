@@ -16,7 +16,8 @@
         "ligne/session": "^1.2",
         "ingenerator/tokenista": "^1.2",
         "phpmailer/phpmailer": "^6.1",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "firebase/php-jwt": "^6.2"
     },
     "autoload": {
         "psr-4": {

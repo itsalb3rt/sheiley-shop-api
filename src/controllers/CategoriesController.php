@@ -13,15 +13,14 @@ class CategoriesController extends Controller
 
     public function __construct()
     {
-        new SecureApi();
         $this->request = Request::createFromGlobals();
-        $this->userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
+        new SecureApi($this->request);
     }
 
     public function categories($id = null)
     {
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
         switch ($this->request->server->get('REQUEST_METHOD')) {
             case 'GET':
                 $categories = new Categories();
@@ -46,7 +45,7 @@ class CategoriesController extends Controller
     private function add()
     {
         $user = new Users();
-        $user = $user->getByToken($this->userToken);
+        $user = $this->request->get('user');
 
         if ($this->request->server->get('REQUEST_METHOD') == 'POST') {
             $newCategory = json_decode($this->request->getContent(), true);
