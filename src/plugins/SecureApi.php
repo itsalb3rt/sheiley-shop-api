@@ -11,6 +11,8 @@ namespace App\plugins;
 
 use App\models\Users\Users;
 use Symfony\Component\HttpFoundation\Request;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class SecureApi
 {
@@ -18,10 +20,10 @@ class SecureApi
     private $request;
     private $acceptOrigin = "*";
 
-    public function __construct(bool $publicArea = false)
+    public function __construct(Request $request , bool $publicArea = false)
     {
         $this->publicArea = $publicArea;
-        $this->request = Request::createFromGlobals();
+        $this->request = $request;
 
         $this->cors();
 
@@ -48,12 +50,14 @@ class SecureApi
 
     private function isTokenValid(): void
     {
-        $userToken = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
-        $user = new Users();
-        $user = $user->getByToken($userToken);
-
-        if (empty($user)) {
-            new RestResponse(null ,403,'Invalid token');
+        try {
+            $token = str_replace('Bearer ', '', $this->request->headers->get('Authorization'));
+            $decoded = JWT::decode($token, new Key($_ENV["JWT_SECRET"], 'HS256'));
+            $user = new Users();
+            $user = $user->getById($decoded->id_user);
+            $this->request->attributes->set('user', $user);
+        } catch (\Exception $e) {
+            new RestResponse(null, 401, 'unauthorized');
             die();
         }
     }
