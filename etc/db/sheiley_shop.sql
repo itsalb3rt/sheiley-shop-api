@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id_user` int(11) NOT NULL,
   `favorite` tinyint(1) DEFAULT NULL,
   `brand` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
