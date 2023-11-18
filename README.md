@@ -24,6 +24,8 @@ API_ENVIRONMENT=pro
 The `API` is ready for using with docker, copy the `.env.bak` file and rename it for `.env` and set your configuration.
 
 ```bash
+# install dependencies
+make install-dependencies
 # Production
 docker-compose up -d
 # Development
